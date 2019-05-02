@@ -7,8 +7,8 @@ export const App = (props) => {
   const {gameTime, errorCount} = props;
 
   return <WelcomeScreen
-    time = {gameTime}
-    errorCount = {errorCount} />;
+    time={gameTime}
+    errorCount={errorCount} />;
 };
 
 App.propTypes = {
