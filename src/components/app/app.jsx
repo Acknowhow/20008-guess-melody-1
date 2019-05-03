@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {WelcomeScreen} from '../welcome-screen/welcome-screen.jsx';
 
 export const App = (props) => {
-  const {gameTime, errorCount} = props;
+  const {gameTime = 5, errorCount = 3} = props;
 
   return <WelcomeScreen
     time={gameTime}
