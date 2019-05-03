@@ -1,6 +1,5 @@
 const path = require(`path`);
 
-
 module.exports = {
 
   entry: `./src/index.js`,
@@ -13,6 +12,7 @@ module.exports = {
     compress: false,
     publicPath: `http://localhost:8084/`,
     hot: true,
+    port: 8084
   },
   module: {
     rules: [
