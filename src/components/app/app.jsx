@@ -16,7 +16,6 @@ export const App = (props) => {
 
 App.propTypes = {
   gameTime: PropTypes.number,
-  errorCount: PropTypes.number,
-  clickHandler: PropTypes.func
+  errorCount: PropTypes.number
 };
 

@@ -4,23 +4,25 @@ import PropTypes from 'prop-types';
 export const WelcomeScreen = (props) => {
   const {time, errorCount, clickHandler} = props;
 
-  return <section className="welcome" id="#section">
-    <div className="welcome__logo">
-      <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/>
-    </div>
-    <button className="welcome__button" onClick={clickHandler}><span className="visually-hidden">Начать игру</span></button>
-    <h2 className="welcome__rules-title">Правила игры</h2>
-    <p className="welcome__text">Правила просты:</p>
-    <ul className="welcome__rules-list">
-      <li>За {time} минут нужно ответить на все вопросы.</li>
-      <li>Можно допустить {errorCount} ошибки.</li>
-    </ul>
-    <p className="welcome__text">Удачи!</p>
-  </section>;
+  return (
+    <section className="welcome" id="#section">
+      <div className="welcome__logo">
+        <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/>
+      </div>
+      <button className="welcome__button" onClick={clickHandler}><span className="visually-hidden">Начать игру</span></button>
+      <h2 className="welcome__rules-title">Правила игры</h2>
+      <p className="welcome__text">Правила просты:</p>
+      <ul className="welcome__rules-list">
+        <li>За {time} минут нужно ответить на все вопросы.</li>
+        <li>Можно допустить {errorCount} ошибки.</li>
+      </ul>
+      <p className="welcome__text">Удачи!</p>
+    </section>
+  );
 };
 
 WelcomeScreen.propTypes = {
-  time: PropTypes.number,
-  errorCount: PropTypes.number,
-  clickHandler: PropTypes.func
+  time: PropTypes.number.isRequired,
+  errorCount: PropTypes.number.isRequired,
+  clickHandler: PropTypes.func.isRequired
 };

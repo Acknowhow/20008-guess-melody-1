@@ -11,7 +11,7 @@ it(`Should work correctly on button click`, () => {
   const params = (e) => e.preventDefault;
 
   const app = shallow(<WelcomeScreen
-    gameTime={7}
+    time={7}
     errorCount={8}
     clickHandler={handler}
   />);
