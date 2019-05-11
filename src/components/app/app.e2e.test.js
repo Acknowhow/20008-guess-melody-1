@@ -1,6 +1,10 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import App from '../app/app.jsx';
+import {configure, mount} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+import App from './app';
+
+configure({adapter: new Adapter()});
 
 const mock = {
   questions: [
@@ -29,15 +33,17 @@ const mock = {
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
+it(`On WelcomeScreen button click App switches to next screen`, () => {
   const {questions} = mock;
-  const tree = renderer
-    .create(<App
-      gameTime={7}
-      errorCount={8}
-      questions={questions}
-    />)
-  .toJSON();
+  const app = mount(<App
+    errorCount={0}
+    gameTime={0}
+    questions={questions}
+  />);
 
-  expect(tree).toMatchSnapshot();
+  const startButton = app.find(`button`);
+  startButton.simulate(`click`);
+  app.update();
+
+  expect(app.state(`question`)).toEqual(0);
 });
