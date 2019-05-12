@@ -42,8 +42,13 @@ it(`On WelcomeScreen button click App switches to next screen`, () => {
   />);
 
   const startButton = app.find(`button`);
+
   startButton.simulate(`click`);
   app.update();
+  const title = app.find(`.game__title`);
 
   expect(app.state(`question`)).toEqual(0);
+
+  expect(title).toHaveLength(1);
+  expect(title.text().indexOf(`blues`)).toBeGreaterThanOrEqual(0);
 });

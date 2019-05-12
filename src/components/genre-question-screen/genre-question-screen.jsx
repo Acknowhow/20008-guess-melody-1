@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GenreQuestionScreen = ({answers, genre}) => {
+const GenreQuestionScreen = ({question, onAnswer}) => {
+  const {
+    answers,
+    genre,
+  } = question;
 
   return (
     <section className="game__screen">
       <h2 className="game__title">Выберите {genre} треки</h2>
-      <form className="game__tracks">
+      <form className="game__tracks" onSubmit={(evt) => {
+        evt.preventDefault();
+        onAnswer();
+      }}>
         {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
           <button className="track__button track__button-play" type="button" />
           <div className="track__status">
@@ -27,12 +34,15 @@ const GenreQuestionScreen = ({answers, genre}) => {
 };
 
 GenreQuestionScreen.propTypes = {
-  genre: PropTypes.oneOf([`rock`, `jazz`, `blues`]).isRequired,
-
-  answers: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
+  onAnswer: PropTypes.func.isRequired,
+  question: PropTypes.shape({
+    answers: PropTypes.arrayOf(PropTypes.shape({
+      src: PropTypes.string.isRequired,
+      genre: PropTypes.oneOf([`rock`, `jazz`, `blues`]).isRequired,
+    })).isRequired,
     genre: PropTypes.oneOf([`rock`, `jazz`, `blues`]).isRequired,
-  })).isRequired
+    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
+  }).isRequired,
 };
 
 export default GenreQuestionScreen;

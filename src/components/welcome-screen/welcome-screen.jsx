@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const WelcomeScreen = ({time, errorCount, handleClick}) => {
+const WelcomeScreen = ({time, errorCount, handleClick}) => {
 
   return (
     <section className="welcome" id="#section">
@@ -27,3 +27,5 @@ WelcomeScreen.propTypes = {
   errorCount: PropTypes.number.isRequired,
   handleClick: PropTypes.func.isRequired
 };
+
+export default WelcomeScreen;
