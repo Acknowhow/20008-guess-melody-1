@@ -43,7 +43,10 @@ export default class App extends Component {
     return null;
   }
 
-  _changeScreen(questions, question) {
+  _changeScreen() {
+    const {questions} = this.props;
+    const {question} = this.state;
+
     return this._getScreen(questions[question], () => {
       this.setState({
         question: question + 1 >= questions.length
@@ -54,8 +57,6 @@ export default class App extends Component {
   }
 
   render() {
-    const {questions} = this.props;
-    const {question} = this.state;
 
     return (
       <section className="game game--artist">
@@ -88,7 +89,7 @@ export default class App extends Component {
           </div>
         </header>
 
-        {this._changeScreen(questions, question)}
+        {this._changeScreen()}
 
       </section>);
   }
