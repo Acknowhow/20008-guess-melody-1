@@ -43,6 +43,16 @@ export default class App extends Component {
     return null;
   }
 
+  _changeScreen(questions, question) {
+    return this._getScreen(questions[question], () => {
+      this.setState({
+        question: question + 1 >= questions.length
+          ? -1
+          : question + 1,
+      });
+    });
+  }
+
   render() {
     const {questions} = this.props;
     const {question} = this.state;
@@ -78,13 +88,7 @@ export default class App extends Component {
           </div>
         </header>
 
-        {this._getScreen(questions[question], () => {
-          this.setState({
-            question: question + 1 >= questions.length
-              ? -1
-              : question + 1,
-          });
-        })}
+        {this._changeScreen(questions, question)}
 
       </section>);
   }
