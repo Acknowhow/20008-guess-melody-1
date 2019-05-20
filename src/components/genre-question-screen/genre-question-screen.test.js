@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import GenreQuestionScreen from './genre-question-screen.jsx';
+import AudioPlayer from "../audio-player/audio-player";
 
 const mock = {
   question: {
@@ -34,7 +35,11 @@ it(`GenreQuestionScreen renders correctly`, () => {
   const tree = renderer.create(<GenreQuestionScreen
     onAnswer={jest.fn()}
     question={question}
-  />).toJSON();
+  />, {
+    createNodeMock: () => {
+      return {};
+    }
+  }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

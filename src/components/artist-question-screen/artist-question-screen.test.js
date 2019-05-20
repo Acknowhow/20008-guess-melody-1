@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import ArtistQuestionScreen from './artist-question-screen.jsx';
+import AudioPlayer from "../audio-player/audio-player";
 
 const mock = {
   question: {
@@ -33,7 +34,11 @@ it(`ArtistQuestionScreen is rendered correctly`, () => {
   const tree = renderer.create(<ArtistQuestionScreen
     onAnswer={jest.fn()}
     question={question}
-  />).toJSON();
+  />, {
+    createNodeMock: () => {
+      return {};
+    }
+  }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
