@@ -8,7 +8,7 @@ export default class ArtistQuestionScreen extends PureComponent {
 
     this.state = {
       isPlaying: false
-    }
+    };
   }
 
   render() {
