@@ -44,7 +44,7 @@ export default class GenreQuestionScreen extends PureComponent {
               value={`answer-${i}`}
               id={`answer-${i}`}
               onChange={() => {
-                const userAnswer = this.state.userAnswer.slice(0);
+                const userAnswer = [...this.state.userAnswer];
                 userAnswer[i] = !userAnswer[i];
 
                 this.setState({

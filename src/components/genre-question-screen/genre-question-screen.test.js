@@ -2,7 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import GenreQuestionScreen from './genre-question-screen.jsx';
-import AudioPlayer from "../audio-player/audio-player";
 
 const mock = {
   question: {
