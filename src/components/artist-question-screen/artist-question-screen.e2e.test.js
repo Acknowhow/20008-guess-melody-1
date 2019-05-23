@@ -20,26 +20,48 @@ const mock = {
       },
       {
         picture: `path2.jpg`,
-        artist: `Jack Daniels`,
+        artist: `Paul Newman`,
       },
       {
         picture: `path3.jpg`,
-        artist: `Jim Beam`,
+        artist: `Gary Barlow`,
       },
     ],
   },
 };
 
-it(`When user answers artist question form is not sent`, () => {
+it(`User answer click should pass data-object which was used to create it`, () => {
   const {question} = mock;
   const onAnswer = jest.fn();
 
-  const artistQuestion = mount(<ArtistQuestionScreen
-    onAnswer={onAnswer} question={question}
-  />)
+  const screen = mount(<ArtistQuestionScreen
+    onAnswer={onAnswer}
+    question={question}
+  />);
 
-  const form = artistQuestion.find(`form`);
-  form.simulate(`change`);
+  const answerInputs = screen.find(`input`);
+  const answerSinead = answerInputs.at(0);
+  const answerPaul = answerInputs.at(1);
+  const answerGary = answerInputs.at(2);
 
-  expect(onAnswer).toHaveBeenCalledTimes(1);
+  answerSinead.simulate(`change`);
+  answerPaul.simulate(`change`);
+  answerGary.simulate(`change`);
+
+  expect(onAnswer).toHaveBeenCalledTimes(3);
+
+  expect(onAnswer).toHaveBeenNthCalledWith(1, {
+    artist: `Sinead O'Connor`,
+    picture: `path1.jpg`,
+  });
+
+  expect(onAnswer).toHaveBeenNthCalledWith(2, {
+    picture: `path2.jpg`,
+    artist: `Paul Newman`,
+  });
+
+  expect(onAnswer).toHaveBeenNthCalledWith(3, {
+    picture: `path3.jpg`,
+    artist: `Gary Barlow`,
+  });
 });
