@@ -3,6 +3,40 @@ const initialState = {
   mistakes: 0,
 };
 
+const isArtistAnswerCorrect = (userAnswer, question) =>
+  userAnswer.artist === question.song.artist;
+
+
+const isGenreAnswerCorrect = (userAnswer, question) =>
+  userAnswer.every((it, i) => it === (
+    question.answers[i].genre === question.genre
+  ));
+
+const ActionCreator = {
+  incrementStep: () => ({
+    type: `INCREMENT_STEP`,
+    payload: 1,
+  }),
+
+  incrementMistake: (userAnswer, question) => {
+    let answerIsCorrect = false;
+
+    switch (question.type) {
+      case `artist`:
+        answerIsCorrect = isArtistAnswerCorrect(userAnswer, question);
+        break;
+      case `genre`:
+        answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
+        break;
+    }
+
+    return {
+      type: `INCREMENT_MISTAKES`,
+      payload: answerIsCorrect ? 0 : 1,
+    };
+  },
+};
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,4 +52,8 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer};
+export {
+  isArtistAnswerCorrect,
+  isGenreAnswerCorrect,
+  reducer,
+};
