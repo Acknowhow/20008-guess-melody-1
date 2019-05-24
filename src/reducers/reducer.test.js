@@ -1,6 +1,7 @@
 import {
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
+  ActionCreator,
   reducer,
 } from './reducer';
 
@@ -107,8 +108,80 @@ describe(`Business logic is correct`, () => {
   });
 });
 
+describe(`ActionCreator works correctly`, () => {
+  it(`ActionCreator should work consistently with method called`, () => {
+    expect(ActionCreator.incrementStep()).toEqual({
+      type: `INCREMENT_STEP`,
+      payload: 1,
+    });
+  });
+
+  it(`ActionCreator should work as expected on correct user answer`, () => {
+    expect(ActionCreator.incrementMistake({
+        artist: `correct-artist`,
+        picture: `correct-pic`,
+      }, {
+        type: `artist`,
+        song: {
+          artist: `correct-artist`,
+          src: ``,
+        },
+        answers: [
+          {
+            artist: `incorrect-artist`,
+            picture: `incorrect-pic`,
+          },
+          {
+            artist: `correct-artist`,
+            picture: `correct-pic`,
+          },
+          {
+            artist: `incorrect-artist-2`,
+            picture: `incorrect-pic`,
+          },
+        ]
+      }
+    )).toEqual({
+      type: `INCREMENT_MISTAKES`,
+      payload: 0
+    })
+  })
+
+  it(`ActionCreator should work as expected on incorrect user answer`, () => {
+    expect(ActionCreator.incrementMistake(
+      {
+        artist: `incorrect-artist-2`,
+        picture: `incorrect-pic`,
+      }, {
+        type: `artist`,
+        song: {
+          artist: `correct-artist`,
+          src: ``,
+        },
+        answers: [
+          {
+            artist: `incorrect-artist`,
+            picture: `incorrect-pic`,
+          },
+          {
+            artist: `correct-artist`,
+            picture: `correct-pic`,
+          },
+          {
+            artist: `incorrect-artist-2`,
+            picture: `incorrect-pic`,
+          },
+        ]
+      }
+    )).toEqual({
+      type: `INCREMENT_MISTAKES`,
+      payload: 1
+    })
+  })
+});
+
 describe(`Reducer works correctly`, () => {
-  it(`Reducer without additional parameters should return initial state`, () => {
+  it(`Reducer should return initial state without any additional parameters`, () => {
     expect(reducer(undefined, {})).toEqual({
       step: -1,
       mistakes: 0,

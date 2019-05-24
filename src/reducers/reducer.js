@@ -55,5 +55,6 @@ const reducer = (state = initialState, action) => {
 export {
   isArtistAnswerCorrect,
   isGenreAnswerCorrect,
+  ActionCreator,
   reducer,
 };
