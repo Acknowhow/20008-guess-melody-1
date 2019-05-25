@@ -19,6 +19,7 @@ class App extends Component {
         onWelcomeScreenClick,
       } = this.props;
 
+
       return <WelcomeScreen
         errorCount={maxMistakes}
         time={gameTime}
@@ -110,10 +111,10 @@ const mapDispatchToProps = (dispatch) => ({
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(ActionCreator.incrementStep());
     dispatch(ActionCreator.incrementMistake(
-      userAnswer,
-      question,
-      mistakes,
-      maxMistakes
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
     ));
   }
 });

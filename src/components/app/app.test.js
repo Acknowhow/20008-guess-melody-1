@@ -50,15 +50,63 @@ const mock = {
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
+it(`App correctly renders WelcomeScreen`, () => {
   const {questions} = mock;
   const tree = renderer
     .create(<App
-      gameTime={7}
-      errorCount={8}
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
       questions={questions}
+      step={-1}
+      onUserAnswer={jest.fn()}
+      onWelcomeScreenClick={jest.fn()}
     />)
   .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
+
+it(`App correctly renders genre question screen`, () => {
+  const {questions} = mock;
+  const tree = renderer
+    .create(<App
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
+      questions={questions}
+      step={0}
+      onUserAnswer={jest.fn()}
+      onWelcomeScreenClick={jest.fn()}
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    })
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`App correctly renders artist question screen`, () => {
+  const {questions} = mock;
+  const tree = renderer
+    .create(<App
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
+      questions={questions}
+      step={1}
+      onUserAnswer={jest.fn()}
+      onWelcomeScreenClick={jest.fn()}
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    })
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+
