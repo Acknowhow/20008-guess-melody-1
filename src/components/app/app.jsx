@@ -9,39 +9,38 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-
-  }
-
+class App extends Component {
   _getScreen(question) {
 
     if (!question) {
       const {
-        errorCount,
+        maxMistakes,
         gameTime,
         onWelcomeScreenClick,
       } = this.props;
 
       return <WelcomeScreen
-        errorCount={errorCount}
+        errorCount={maxMistakes}
         time={gameTime}
         handleClick={onWelcomeScreenClick}
       />;
     }
 
-    const {onUserAnswer} = this.props;
+    const {
+      onUserAnswer,
+      mistakes,
+      maxMistakes,
+    } = this.props;
 
     switch (question.type) {
       case `genre`: return <GenreQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question)}
+        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
 
       case `artist`: return <ArtistQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question)}
+        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
     }
 
@@ -92,11 +91,11 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  errorCount: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
   gameTime: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
 };
@@ -108,12 +107,18 @@ const mapStateToProps = (state, ownProps) => Object.assign(
 const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
 
-  onUserAnswer: (userAnswer, question) => {
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(ActionCreator.incrementStep());
-    dispatch(ActionCreator.incrementMistake(userAnswer, question));
+    dispatch(ActionCreator.incrementMistake(
+      userAnswer,
+      question,
+      mistakes,
+      maxMistakes
+    ));
   }
 });
 
+export {App};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 

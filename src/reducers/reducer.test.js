@@ -59,7 +59,8 @@ describe(`Business logic is correct`, () => {
   });
 
   it(`Genre question is checked correctly`, () => {
-    expect(isGenreAnswerCorrect([false, false, true, false], {
+    expect(isGenreAnswerCorrect(
+      [false, false, true, false], {
       type: `genre`,
       genre: `rock`,
       answers: [
@@ -83,7 +84,8 @@ describe(`Business logic is correct`, () => {
     })).toEqual(true);
 
 
-    expect(isGenreAnswerCorrect([false, false, false, false], {
+    expect(isGenreAnswerCorrect(
+      [false, false, false, false], {
       type: `genre`,
       genre: `jazz`,
       answers: [
@@ -108,76 +110,193 @@ describe(`Business logic is correct`, () => {
   });
 });
 
-describe(`ActionCreator works correctly`, () => {
-  it(`ActionCreator should work consistently with method called`, () => {
+describe(`Action creator works correctly`, () => {
+  it(`Action creator should work consistently with method called`, () => {
     expect(ActionCreator.incrementStep()).toEqual({
       type: `INCREMENT_STEP`,
       payload: 1,
     });
   });
 
-  it(`ActionCreator should work as expected on correct user answer`, () => {
+  it(`Action creator increments 0 payload on increment mistake method call if correct artist answer is provided`,
+    () => {
+
     expect(ActionCreator.incrementMistake({
+      artist: `correct-artist`,
+      picture: `correct-pic`,
+    }, {
+      type: `artist`,
+      song: {
         artist: `correct-artist`,
-        picture: `correct-pic`,
-      }, {
-        type: `artist`,
-        song: {
-          artist: `correct-artist`,
-          src: ``,
+        src: ``,
+      },
+      answers: [
+        {
+          artist: `incorrect-artist`,
+          picture: `incorrect-pic`,
         },
-        answers: [
-          {
-            artist: `incorrect-artist`,
-            picture: `incorrect-pic`,
-          },
-          {
-            artist: `correct-artist`,
-            picture: `correct-pic`,
-          },
-          {
-            artist: `incorrect-artist-2`,
-            picture: `incorrect-pic`,
-          },
-        ]
-      }
-    )).toEqual({
+        {
+          artist: `correct-artist`,
+          picture: `correct-pic`,
+        },
+        {
+          artist: `incorrect-artist-2`,
+          picture: `incorrect-pic`,
+        },
+      ]
+    }, 0, Infinity)).toEqual({
       type: `INCREMENT_MISTAKES`,
       payload: 0
-    })
-  })
+    });
+  });
 
-  it(`ActionCreator should work as expected on incorrect user answer`, () => {
+  it(`Action creator increments 1 payload on increment mistake method call if incorrect artist answer is provided`,
+    () => {
+
     expect(ActionCreator.incrementMistake(
-      {
-        artist: `incorrect-artist-2`,
-        picture: `incorrect-pic`,
-      }, {
-        type: `artist`,
-        song: {
-          artist: `correct-artist`,
-          src: ``,
-        },
-        answers: [
-          {
-            artist: `incorrect-artist`,
-            picture: `incorrect-pic`,
-          },
-          {
+        {
+          artist: `incorrect-artist-2`,
+          picture: `incorrect-pic`,
+        }, {
+          type: `artist`,
+          song: {
             artist: `correct-artist`,
-            picture: `correct-pic`,
+            src: ``,
           },
-          {
-            artist: `incorrect-artist-2`,
-            picture: `incorrect-pic`,
-          },
-        ]
-      }
-    )).toEqual({
+          answers: [
+            {
+              artist: `incorrect-artist`,
+              picture: `incorrect-pic`,
+            },
+            {
+              artist: `correct-artist`,
+              picture: `correct-pic`,
+            },
+            {
+              artist: `incorrect-artist-2`,
+              picture: `incorrect-pic`,
+            },
+          ]
+        }, 0, Infinity)).toEqual({
       type: `INCREMENT_MISTAKES`,
       payload: 1
-    })
-  })
+    });
+  });
+
+  it(`Action creator increments 0 payload on increment mistake method call if correct genre answer is provided `,
+    () => {
+    expect(ActionCreator.incrementMistake(
+      [false, true, false, false], {
+      type: `genre`,
+      genre: `jazz`,
+      answers: [
+        {
+          genre: `rock`,
+          src: ``,
+        },
+        {
+          genre: `jazz`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+      ]
+    }, 0, Infinity)).toEqual({
+      type: `INCREMENT_MISTAKES`,
+      payload: 0,
+    });
+  });
+
+  it(`Action creator increments 1 payload on increment mistake method call if incorrect genre answer is provided`,
+    () => {
+    expect(ActionCreator.incrementMistake(
+      [true, true, true, true], {
+      type: `genre`,
+      genre: `jazz`,
+      answers: [
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+      ]
+    }, 0, Infinity)).toEqual({
+      type: `INCREMENT_MISTAKES`,
+      payload: 1,
+    });
+  });
+
+  it(`Action creator resets state on increment mistake method call if the answer is incorrect and there are no more mistakes`,
+    () => {
+    expect(ActionCreator.incrementMistake({
+      artist: `incorrect`,
+      picture: ``,
+    }, {
+      type: `artist`,
+      song: {
+        artist: `correct`,
+        src: ``,
+      },
+      answers: [
+        {
+          artist: `correct`,
+          picture: ``,
+        },
+        {
+          artist: `incorrect`,
+          picture: ``,
+        },
+        {
+          artist: `incorrect-2`,
+          picture: ``,
+        },
+      ]
+    }, Infinity, 0)).toEqual({
+      type: `RESET`,
+    });
+
+    expect(ActionCreator.incrementMistake([false, false, false, true], {
+      type: `genre`,
+      genre: `jazz`,
+      answers: [
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+        {
+          genre: `blues`,
+          src: ``,
+        },
+      ]
+    }, Infinity, 0)).toEqual({
+      type: `RESET`,
+    });
+  });
 });
 
 describe(`Reducer works correctly`, () => {

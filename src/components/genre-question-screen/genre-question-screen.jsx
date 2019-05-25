@@ -38,6 +38,7 @@ export default class GenreQuestionScreen extends PureComponent {
           />
           <div className="game__answer">
             <input
+              checked={this.state.userAnswer[i]}
               className="game__input visually-hidden"
               type="checkbox"
               name="answer"
@@ -47,9 +48,7 @@ export default class GenreQuestionScreen extends PureComponent {
                 const userAnswer = [...this.state.userAnswer];
                 userAnswer[i] = !userAnswer[i];
 
-                this.setState({
-                  userAnswer,
-                });
+                this.setState({userAnswer});
               }}
             />
             <label className="game__check" htmlFor={`answer-${i}`}>
