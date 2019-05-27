@@ -6,7 +6,7 @@ export default class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {question} = this.props;
+    const {question} = props;
     const {answers} = question;
 
     this.state = {
