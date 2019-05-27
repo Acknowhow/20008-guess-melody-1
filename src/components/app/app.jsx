@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import {Type} from '../../data';
 
-import {ActionCreator} from '../../reducers/reducer';
+import * as Action from '../../reducers/reducer';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
@@ -16,7 +16,7 @@ class App extends Component {
       const {
         maxMistakes,
         gameTime,
-        onWelcomeScreenClick,
+        onWelcomeScreenClick
       } = this.props;
 
 
@@ -28,20 +28,21 @@ class App extends Component {
     }
 
     const {
-      onUserAnswer,
       mistakes,
       maxMistakes,
+      onGenreUserAnswer,
+      onArtistUserAnswer
     } = this.props;
 
     switch (question.type) {
       case `genre`: return <GenreQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question, mistakes, maxMistakes)}
+        onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
 
       case `artist`: return <ArtistQuestionScreen
         question={question}
-        onAnswer={(userAnswer) => onUserAnswer(userAnswer, question, mistakes, maxMistakes)}
+        onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
     }
 
@@ -97,8 +98,9 @@ App.propTypes = {
   gameTime: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
-  onUserAnswer: PropTypes.func.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
+  onGenreUserAnswer: PropTypes.func.isRequired,
+  onArtistUserAnswer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign(
@@ -106,17 +108,11 @@ const mapStateToProps = (state, ownProps) => Object.assign(
     });
 
 const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
+  onWelcomeScreenClick: () => dispatch(Action.onWelcomeScreenClick),
 
-  onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
-    dispatch(ActionCreator.incrementStep());
-    dispatch(ActionCreator.incrementMistake(
-        userAnswer,
-        question,
-        mistakes,
-        maxMistakes
-    ));
-  }
+  onGenreUserAnswer: () => dispatch(Action.onGenreUserAnswer),
+
+  onArtistUserAnswer: () => dispatch(Action.onArtistUserAnswer)
 });
 
 export {App};

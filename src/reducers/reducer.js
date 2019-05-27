@@ -3,45 +3,18 @@ const initialState = {
   mistakes: 0,
 };
 
-const isArtistAnswerCorrect = (userAnswer, question) =>
-  userAnswer.artist === question.song.artist;
-
-
-const isGenreAnswerCorrect = (userAnswer, question) =>
-  userAnswer.every((it, i) => it === (
-    question.answers[i].genre === question.genre
-  ));
-
 const ActionCreator = {
   incrementStep: () => {
-
     return {
       type: `INCREMENT_STEP`,
       payload: 1,
     };
   },
 
-  incrementMistake: (userAnswer, question, mistakes, maxMistakes) => {
-    let answerIsCorrect = false;
-
-    switch (question.type) {
-      case `artist`:
-        answerIsCorrect = isArtistAnswerCorrect(userAnswer, question);
-        break;
-      case `genre`:
-        answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
-        break;
-    }
-
-    if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
-      return {
-        type: `RESET`,
-      };
-    }
-
+  incrementMistake: () => {
     return {
-      type: `INCREMENT_MISTAKES`,
-      payload: answerIsCorrect ? 0 : 1,
+      type: `INCREMENT_MISTAKE`,
+      payload: 1,
     };
   },
 
@@ -59,6 +32,45 @@ const ActionCreator = {
   }
 };
 
+const isArtistAnswerCorrect = (userAnswer, question) =>
+  userAnswer.artist === question.song.artist;
+
+const isGenreAnswerCorrect = (userAnswer, question) =>
+  userAnswer.every((it, i) => it === (
+    question.answers[i].genre === question.genre
+  ));
+
+const proceedOnUserAnswer = (answerIsCorrect, mistakes, maxMistakes) => {
+  ActionCreator.incrementStep();
+  if (!answerIsCorrect) {
+    ActionCreator.incrementMistake();
+  }
+
+  if (answerIsCorrect) {
+    ActionCreator.staleMistake();
+  }
+
+  if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
+    ActionCreator.resetState();
+  }
+};
+
+const onWelcomeScreenClick = () => {
+  ActionCreator.incrementStep();
+};
+
+const onGenreUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
+  const answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
+
+  proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+};
+
+const onArtistUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
+  const answerIsCorrect = isArtistAnswerCorrect(userAnswer, question);
+
+  proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+};
+
 
 const reducer = (state = initialState, action) => {
 
@@ -68,7 +80,12 @@ const reducer = (state = initialState, action) => {
         step: state.step + action.payload,
       });
 
-    case `INCREMENT_MISTAKES`:
+    case `INCREMENT_MISTAKE`:
+      return Object.assign({}, state, {
+        mistakes: state.mistakes + action.payload,
+      });
+
+    case `STALE_MISTAKE`:
       return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload,
       });
@@ -79,8 +96,9 @@ const reducer = (state = initialState, action) => {
 };
 
 export {
-  isArtistAnswerCorrect,
-  isGenreAnswerCorrect,
+  onWelcomeScreenClick,
+  onGenreUserAnswer,
+  onArtistUserAnswer,
   ActionCreator,
   reducer,
 };
