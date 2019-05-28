@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from '../app/app.jsx';
+import {App} from '../app/app.jsx';
 
 const mock = {
   questions: [
@@ -25,19 +25,89 @@ const mock = {
           genre: `rock`,
         },
       ],
-    }
+    },
+    {
+      type: `artist`,
+      song: {
+        artist: `Jim Beam`,
+        src: `path.mp3`,
+      },
+      answers: [
+        {
+          picture: `path.jpg`,
+          artist: `John Snow`,
+        },
+        {
+          picture: `path.jpg`,
+          artist: `Jack Daniels`,
+        },
+        {
+          picture: `path.jpg`,
+          artist: `Jim Beam`,
+        },
+      ],
+    },
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
+it(`App correctly renders WelcomeScreen`, () => {
   const {questions} = mock;
   const tree = renderer
     .create(<App
-      gameTime={7}
-      errorCount={8}
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
       questions={questions}
+      step={-1}
+      onWelcomeScreenClick={jest.fn()}
+      onGenreUserAnswer={jest.fn()}
+      onArtistUserAnswer={jest.fn()}
     />)
-  .toJSON();
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`App correctly renders genre question screen`, () => {
+  const {questions} = mock;
+  const tree = renderer
+    .create(<App
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
+      questions={questions}
+      step={0}
+      onWelcomeScreenClick={jest.fn()}
+      onGenreUserAnswer={jest.fn()}
+      onArtistUserAnswer={jest.fn()}
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    })
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`App correctly renders artist question screen`, () => {
+  const {questions} = mock;
+  const tree = renderer
+    .create(<App
+      mistakes={100}
+      maxMistakes={Infinity}
+      gameTime={1000000}
+      questions={questions}
+      step={1}
+      onWelcomeScreenClick={jest.fn()}
+      onGenreUserAnswer={jest.fn()}
+      onArtistUserAnswer={jest.fn()}
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    })
+    .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
