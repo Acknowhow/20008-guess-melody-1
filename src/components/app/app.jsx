@@ -108,11 +108,11 @@ const mapStateToProps = (state, ownProps) => Object.assign(
     });
 
 const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(Action.onWelcomeScreenClick),
+  onWelcomeScreenClick: () => dispatch(Action.onWelcomeScreenClick()),
 
-  onGenreUserAnswer: () => dispatch(Action.onGenreUserAnswer),
+  onGenreUserAnswer: () => dispatch(Action.onGenreUserAnswer()),
 
-  onArtistUserAnswer: () => dispatch(Action.onArtistUserAnswer)
+  onArtistUserAnswer: () => dispatch(Action.onArtistUserAnswer())
 });
 
 export {App};
