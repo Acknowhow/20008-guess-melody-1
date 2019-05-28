@@ -108,11 +108,17 @@ const mapStateToProps = (state, ownProps) => Object.assign(
     });
 
 const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(Action.onWelcomeScreenClick()),
+  onWelcomeScreenClick: () => dispatch(Action.ActionCreator.incrementStep()),
 
-  onGenreUserAnswer: () => dispatch(Action.onGenreUserAnswer()),
+  onGenreUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+    dispatch(Action.ActionCreator.incrementStep());
+    dispatch(Action.onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes));
+  },
 
-  onArtistUserAnswer: () => dispatch(Action.onArtistUserAnswer())
+  onArtistUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+    dispatch(Action.ActionCreator.incrementStep());
+    dispatch(Action.onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes));
+  }
 });
 
 export {App};

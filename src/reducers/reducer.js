@@ -41,34 +41,28 @@ const isGenreAnswerCorrect = (userAnswer, question) =>
   ));
 
 const proceedOnUserAnswer = (answerIsCorrect, mistakes, maxMistakes) => {
-  ActionCreator.incrementStep();
-  if (!answerIsCorrect) {
-    ActionCreator.incrementMistake();
-  }
 
-  if (answerIsCorrect) {
-    ActionCreator.staleMistake();
+  if (!answerIsCorrect && mistakes + 1 < maxMistakes) {
+    return ActionCreator.incrementMistake();
   }
 
   if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
-    ActionCreator.resetState();
+    return ActionCreator.resetState();
   }
-};
 
-const onWelcomeScreenClick = () => {
-  ActionCreator.incrementStep();
+  return ActionCreator.staleMistake();
 };
 
 const onGenreUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
   const answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
 
-  proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+  return proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
 };
 
 const onArtistUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
   const answerIsCorrect = isArtistAnswerCorrect(userAnswer, question);
 
-  proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+  return proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
 };
 
 
@@ -96,7 +90,6 @@ const reducer = (state = initialState, action) => {
 };
 
 export {
-  onWelcomeScreenClick,
   onGenreUserAnswer,
   onArtistUserAnswer,
   ActionCreator,
