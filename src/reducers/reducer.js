@@ -90,6 +90,8 @@ const reducer = (state = initialState, action) => {
 };
 
 export {
+  isArtistAnswerCorrect,
+  isGenreAnswerCorrect,
   onGenreUserAnswer,
   onArtistUserAnswer,
   ActionCreator,

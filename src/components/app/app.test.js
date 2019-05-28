@@ -59,8 +59,9 @@ it(`App correctly renders WelcomeScreen`, () => {
       gameTime={1000000}
       questions={questions}
       step={-1}
-      onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
+      onGenreUserAnswer={jest.fn()}
+      onArtistUserAnswer={jest.fn()}
     />)
     .toJSON();
 
@@ -76,8 +77,9 @@ it(`App correctly renders genre question screen`, () => {
       gameTime={1000000}
       questions={questions}
       step={0}
-      onUserAnswer={jest.fn()}
       onWelcomeScreenClick={jest.fn()}
+      onGenreUserAnswer={jest.fn()}
+      onArtistUserAnswer={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};
