@@ -13,13 +13,14 @@ const withActivePlayer = (Component) => {
     render() {
       const {activePlayer} = this.state;
 
-      return <Component
-        {...this.props}
-        activePlayer={activePlayer}
-        onPlayButtonClick={(i) => this.setState({
-          activePlayer: activePlayer === i ? -1 : i
-        })}
-      />;
+      return (
+        <Component
+          {...this.props}
+          activePlayer={activePlayer}
+          onPlayButtonClick={(i) => this.setState({
+            activePlayer: activePlayer === i ? -1 : i
+          })}
+        />);
     }
   }
 

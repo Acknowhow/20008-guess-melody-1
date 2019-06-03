@@ -3,20 +3,16 @@ import PropTypes from 'prop-types';
 import AudioPlayer from './../audio-player/audio-player.jsx';
 
 export default class GenreQuestionScreen extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    const {question} = props;
-    const {answers} = question;
-
-    this.state = {
-      activePlayer: -1,
-      userAnswer: new Array(answers.length).fill(false),
-    };
-  }
-
   render() {
-    const {question, onAnswer} = this.props;
+    const {
+      question,
+      onAnswer,
+      activePlayer,
+      onPlayButtonClick,
+      onChange,
+      userAnswer
+    } = this.props;
+
     const {
       answers,
       genre,
@@ -26,30 +22,23 @@ export default class GenreQuestionScreen extends PureComponent {
       <h2 className="game__title">Выберите {genre} треки</h2>
       <form className="game__tracks" onSubmit={(evt) => {
         evt.preventDefault();
-        onAnswer(this.state.userAnswer);
+        onAnswer();
       }}>
         {answers.map((it, i) => <div className="track" key={`answer-${i}`}>
           <AudioPlayer
             src={it.src}
-            isPlaying={i === this.state.activePlayer}
-            onPlayButtonClick={() => this.setState({
-              activePlayer: this.state.activePlayer === i ? -1 : i
-            })}
+            isPlaying={i === activePlayer}
+            onPlayButtonClick={() => onPlayButtonClick(i)}
           />
           <div className="game__answer">
             <input
-              checked={this.state.userAnswer[i]}
+              checked={userAnswer[i]}
               className="game__input visually-hidden"
               type="checkbox"
               name="answer"
               value={`answer-${i}`}
               id={`answer-${i}`}
-              onChange={() => {
-                const userAnswer = [...this.state.userAnswer];
-                userAnswer[i] = !userAnswer[i];
-
-                this.setState({userAnswer});
-              }}
+              onChange={() => onChange(i)}
             />
             <label className="game__check" htmlFor={`answer-${i}`}>
               Отметить
@@ -73,4 +62,8 @@ GenreQuestionScreen.propTypes = {
     genre: PropTypes.oneOf([`rock`, `jazz`, `blues`]).isRequired,
     type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
   }).isRequired,
+  activePlayer: PropTypes.number.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };

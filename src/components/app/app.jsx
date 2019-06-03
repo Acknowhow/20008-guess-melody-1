@@ -9,6 +9,11 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
+import withActivePlayer from './../../hocs/with-active-player/with-active-player';
+import withUserAnswer from './../../hocs/with-user-answer/with-user-answer';
+
+const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
+
 class App extends Component {
   _getScreen(question) {
 
@@ -35,7 +40,8 @@ class App extends Component {
     } = this.props;
 
     switch (question.type) {
-      case `genre`: return <GenreQuestionScreen
+      case `genre`: return <GenreQuestionScreenWrapped
+        answers={question.answers}
         question={question}
         onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
