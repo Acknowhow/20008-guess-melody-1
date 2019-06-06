@@ -11,8 +11,15 @@ import ArtistQuestionScreen from '../artist-question-screen/artist-question-scre
 
 import withActivePlayer from './../../hocs/with-active-player/with-active-player';
 import withUserAnswer from './../../hocs/with-user-answer/with-user-answer';
+import withTransformProps from './../../hocs/with-transform-props/with-transform-props';
 
-const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
+const GenreQuestionScreenWrapped = withActivePlayer(
+  withUserAnswer(
+    withTransformProps((props) => {
+      return Object.assign({}, props, {
+        renderAnswer: props.renderPlayer
+      });
+    })(GenreQuestionScreen)));
 
 class App extends Component {
   _getScreen(question) {
