@@ -17,6 +17,8 @@ it(`AudioPlayer is rendered correctly`, () => {
     isPlaying={false}
     onPlayButtonClick={onPlayButtonClick}
     src={song.src}
+    isLoading={true}
+    renderAudio={jest.fn()}
   />, {
     createNodeMock: () => {
       return {};

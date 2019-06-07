@@ -42,6 +42,7 @@ it(`When user answers genre question form is not sent`, () => {
     onPlayButtonClick={jest.fn()}
     onChange={jest.fn()}
     userAnswer={[]}
+    renderAnswer={jest.fn()}
   />);
 
   const form = genreQuestion.find(`form`);
@@ -63,6 +64,7 @@ it(`Rendered checkboxes are synchronized with prop "userAnswer"`, () => {
     answers={question.answers}
     onAnswer={jest.fn()}
     onPlayButtonClick={jest.fn()}
+    renderAnswer={jest.fn()}
     question={question}
   />);
 
@@ -92,6 +94,7 @@ it(`User answer passed to callback is consistent with "userAnswer" prop`, () => 
     onPlayButtonClick={jest.fn()}
     question={question}
     userAnswer={userAnswer}
+    renderAnswer={jest.fn()}
   />);
 
   const form = genreQuestion.find(`form`);
