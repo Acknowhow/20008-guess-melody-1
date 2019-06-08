@@ -36,6 +36,7 @@ it(`User answer click should pass data-object which was used to create it`, () =
 
   const screen = mount(<ArtistQuestionScreen
     onAnswer={onAnswer}
+    renderPlayer={jest.fn()}
     question={question}
   />);
 

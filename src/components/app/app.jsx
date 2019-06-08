@@ -9,6 +9,26 @@ import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 
+import withActivePlayer from './../../hocs/with-active-player/with-active-player';
+import withUserAnswer from './../../hocs/with-user-answer/with-user-answer';
+import withTransformProps from './../../hocs/with-transform-props/with-transform-props';
+
+const transformPlayerToAnswer = (props) => {
+  const newProps = Object.assign({}, props, {
+    renderAnswer: props.renderPlayer
+  });
+  delete newProps.renderPlayer;
+
+  return newProps;
+};
+
+const ArtistQuestionScreenWrapped = withActivePlayer(
+    ArtistQuestionScreen);
+
+const GenreQuestionScreenWrapped = withActivePlayer(
+    withUserAnswer(
+        withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
+
 class App extends Component {
   _getScreen(question) {
 
@@ -35,12 +55,13 @@ class App extends Component {
     } = this.props;
 
     switch (question.type) {
-      case `genre`: return <GenreQuestionScreen
+      case `genre`: return <GenreQuestionScreenWrapped
+        answers={question.answers}
         question={question}
         onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
 
-      case `artist`: return <ArtistQuestionScreen
+      case `artist`: return <ArtistQuestionScreenWrapped
         question={question}
         onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes)}
       />;
