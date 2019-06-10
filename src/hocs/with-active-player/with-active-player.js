@@ -13,6 +13,23 @@ const withActivePlayer = (Component) => {
       this.state = {
         activePlayer: -1,
       };
+
+      this.playButtonClickCompound = {};
+    }
+
+    _getOnPlayButtonClick(id) {
+      if (!this.playButtonClickCompound[id]) {
+
+        this.playButtonClickCompound[id] = () => {
+          const {activePlayer} = this.state;
+
+          this.setState({
+            activePlayer: activePlayer === id ? -1 : id
+          })
+        }
+      }
+
+      return this.playButtonClickCompound[id];
     }
 
     render() {
@@ -25,10 +42,7 @@ const withActivePlayer = (Component) => {
           renderPlayer={(it, i) => {
             return (<AudioPlayerWrapped
               isPlaying={i === activePlayer}
-              onPlayButtonClick={() =>
-                this.setState({
-                  activePlayer: activePlayer === i ? -1 : i
-                })}
+              onPlayButtonClick={this._getOnPlayButtonClick(i)}
               src={it.src}
             />);
           }}
