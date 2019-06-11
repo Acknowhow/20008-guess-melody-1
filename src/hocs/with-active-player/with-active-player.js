@@ -15,6 +15,7 @@ const withActivePlayer = (Component) => {
       };
 
       this.playButtonClickCompound = {};
+      this._getOnPlayButtonClick = this._getOnPlayButtonClick.bind(this);
     }
 
     _getOnPlayButtonClick(id) {
@@ -25,8 +26,8 @@ const withActivePlayer = (Component) => {
 
           this.setState({
             activePlayer: activePlayer === id ? -1 : id
-          })
-        }
+          });
+        };
       }
 
       return this.playButtonClickCompound[id];

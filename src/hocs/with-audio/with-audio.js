@@ -57,10 +57,6 @@ const withAudio = (Component) => {
       audio.onpause = () => this.setState({
         isPlaying: false,
       });
-
-      audio.ontimeupdate = () => this.setState({
-        progress: audio.currentTime
-      });
     }
 
     componentDidUpdate() {
