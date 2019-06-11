@@ -8,6 +8,8 @@ import * as Action from '../../reducers/reducer';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
+import GameOverScreen from '../game-over-screen/game-over-screen.jsx';
+import WinScreen from '../win-screen/win-screen.jsx';
 
 import withActivePlayer from './../../hocs/with-active-player/with-active-player';
 import withUserAnswer from './../../hocs/with-user-answer/with-user-answer';
@@ -33,26 +35,39 @@ class App extends Component {
   _getScreen(question) {
 
     if (!question) {
-      const {
-        maxMistakes,
-        gameTime,
-        onWelcomeScreenClick
-      } = this.props;
+      const {step, questions} = this.props;
+      if (step > questions.length - 1) {
+        return <WinScreen/>;
+      } else {
+
+        const {
+          maxMistakes,
+          gameTime,
+          onWelcomeScreenClick
+        } = this.props;
 
 
-      return <WelcomeScreen
-        errorCount={maxMistakes}
-        time={gameTime}
-        handleClick={onWelcomeScreenClick}
-      />;
+        return <WelcomeScreen
+          errorCount={maxMistakes}
+          time={gameTime}
+          handleClick={onWelcomeScreenClick}
+        />;
+      }
     }
 
     const {
       mistakes,
       maxMistakes,
       onGenreUserAnswer,
-      onArtistUserAnswer
+      onArtistUserAnswer,
+      resetGame
     } = this.props;
+
+    if (mistakes >= maxMistakes) {
+      return <GameOverScreen
+        onRelaunchButtonClick={resetGame}
+      />;
+    }
 
     switch (question.type) {
       case `genre`: return <GenreQuestionScreenWrapped
@@ -121,7 +136,8 @@ App.propTypes = {
   step: PropTypes.number.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onGenreUserAnswer: PropTypes.func.isRequired,
-  onArtistUserAnswer: PropTypes.func.isRequired
+  onArtistUserAnswer: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign(
@@ -139,7 +155,9 @@ const mapDispatchToProps = (dispatch) => ({
   onArtistUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(Action.ActionCreator.incrementStep());
     dispatch(Action.onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes));
-  }
+  },
+
+  resetGame: () => dispatch(Action.ActionCreator.resetState())
 });
 
 export {App};
