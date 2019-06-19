@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {Type} from '../../data';
+import {GameType} from '../../data';
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
     } = this.props;
 
     return (
-      <section className={`game ${Type.ARTIST}`}>
+      <section className={`game ${GameType.ARTIST}`}>
         <header className="game__header">
           <a className="game__back" href="#">
             <span className="visually-hidden">Сыграть ещё раз</span>
@@ -56,7 +56,10 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign(
-    {}, ownProps, {step: state.step});
+    {}, ownProps, {
+      questions: state.questions,
+      step: state.step
+    });
 
 export {App};
 

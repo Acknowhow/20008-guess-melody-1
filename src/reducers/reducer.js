@@ -1,33 +1,44 @@
+import questions from './../mocks/questions';
+import {ActionType} from './../data';
+
 const initialState = {
   step: -1,
   mistakes: 0,
+  questions: []
 };
 
 const ActionCreator = {
+  loadQuestions: () => {
+    return {
+      type: ActionType.LOAD_QUESTIONS,
+      payload: questions,
+    };
+  },
+
   incrementStep: () => {
     return {
-      type: `INCREMENT_STEP`,
+      type: ActionType.INCREMENT_STEP,
       payload: 1,
     };
   },
 
   incrementMistake: () => {
     return {
-      type: `INCREMENT_MISTAKE`,
+      type: ActionType.INCREMENT_MISTAKE,
       payload: 1,
     };
   },
 
   staleMistake: () => {
     return {
-      type: `STALE_MISTAKE`,
+      type: ActionType.STALE_MISTAKE,
       payload: 0
     };
   },
 
   resetState: () => {
     return {
-      type: `RESET`,
+      type: ActionType.RESET,
     };
   }
 };
@@ -69,24 +80,28 @@ const onArtistUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
 const reducer = (state = initialState, action) => {
 
   switch (action.type) {
-    case `INCREMENT_STEP`:
+    case ActionType.INCREMENT_STEP:
       return Object.assign({}, state, {
         step: state.step + action.payload,
       });
 
-    case `INCREMENT_MISTAKE`:
+    case ActionType.INCREMENT_MISTAKE:
       return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload,
       });
 
-    case `STALE_MISTAKE`:
+    case ActionType.STALE_MISTAKE:
       return Object.assign({}, state, {
         mistakes: state.mistakes + action.payload,
       });
 
-    default:
-      return initialState;
+    case ActionType.LOAD_QUESTIONS:
+      return Object.assign({}, state, {
+        questions: action.payload,
+      });
   }
+
+  return state;
 };
 
 export {
