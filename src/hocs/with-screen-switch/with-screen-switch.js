@@ -109,7 +109,7 @@ const withScreenSwitch = (Component) => {
     onGenreUserAnswer: PropTypes.func.isRequired,
     onArtistUserAnswer: PropTypes.func.isRequired,
     resetGame: PropTypes.func.isRequired
-  }
+  };
 
   return WithScreenSwitch;
 };
