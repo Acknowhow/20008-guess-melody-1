@@ -12,6 +12,7 @@ const Operation = {
       .then((response) => response.json())
       .then((questions) => {
         dispatch(ActionCreator.loadQuestions(questions));
+        console.log(questions)
       });
   }
 };

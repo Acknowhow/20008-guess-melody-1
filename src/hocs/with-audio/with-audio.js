@@ -9,7 +9,6 @@ const withAudio = (Component) => {
       this._audioRef = createRef();
 
       this.state = {
-        progress: 0,
         isLoading: true,
         isPlaying: props.isPlaying,
       };
@@ -44,7 +43,7 @@ const withAudio = (Component) => {
 
       audio.src = src;
 
-      audio.oncanplaythrough = () => this.setState({
+      audio.oncanplay = () => this.setState({
         isLoading: false,
       });
 
