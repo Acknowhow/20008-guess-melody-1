@@ -1,11 +1,13 @@
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from "redux-thunk";
+import {compose} from "recompose";
 
 import App from './components/app/app.jsx';
 
-import {reducer, ActionCreator} from './reducers/reducer';
+import {reducer, Operation} from './reducers/reducer';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
 const settings = {
@@ -15,11 +17,17 @@ const settings = {
 const AppWrapped = withScreenSwitch(App);
 
 const init = () => {
-  const store = createStore(reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__());
+  const store = createStore(
+    reducer,
 
-  store.dispatch(ActionCreator.loadQuestions());
+    compose(
+      applyMiddleware(thunk),
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__()
+    ));
+
+
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(<Provider store={store}>
     <AppWrapped

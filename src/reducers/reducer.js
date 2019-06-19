@@ -1,4 +1,3 @@
-import questions from './../mocks/questions';
 import {ActionType} from './../data';
 
 const initialState = {
@@ -7,8 +6,19 @@ const initialState = {
   questions: []
 };
 
+const Operation = {
+  loadQuestions: () => (dispatch) => {
+    return fetch(`https://es31-server.appspot.com/guess-melody/questions`)
+      .then((response) => response.json())
+      .then((questions) => {
+        dispatch(ActionCreator.loadQuestions(questions));
+      });
+  }
+};
+
+
 const ActionCreator = {
-  loadQuestions: () => {
+  loadQuestions: (questions) => {
     return {
       type: ActionType.LOAD_QUESTIONS,
       payload: questions,
@@ -111,4 +121,5 @@ export {
   onArtistUserAnswer,
   ActionCreator,
   reducer,
+  Operation
 };
