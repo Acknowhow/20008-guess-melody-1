@@ -45,6 +45,7 @@ const withScreenSwitch = (Component) => {
         const {step, questions} = this.props;
         if (step > questions.length - 1) {
           return <WinScreen/>;
+
         } else {
 
           const {
@@ -79,12 +80,12 @@ const withScreenSwitch = (Component) => {
         case `genre`: return <GenreQuestionScreenWrapped
           answers={question.answers}
           question={question}
-          onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes)}
+          onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question)}
         />;
 
         case `artist`: return <ArtistQuestionScreenWrapped
           question={question}
-          onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes)}
+          onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question)}
         />;
       }
 
@@ -124,14 +125,14 @@ const mapStateToProps = (state, ownProps) => Object.assign(
 const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => dispatch(Action.ActionCreator.incrementStep()),
 
-  onGenreUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+  onGenreUserAnswer: (userAnswer, question) => {
     dispatch(Action.ActionCreator.incrementStep());
-    dispatch(Action.onGenreUserAnswer(userAnswer, question, mistakes, maxMistakes));
+    dispatch(Action.onGenreUserAnswer(userAnswer, question));
   },
 
-  onArtistUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
+  onArtistUserAnswer: (userAnswer, question) => {
     dispatch(Action.ActionCreator.incrementStep());
-    dispatch(Action.onArtistUserAnswer(userAnswer, question, mistakes, maxMistakes));
+    dispatch(Action.onArtistUserAnswer(userAnswer, question));
   },
 
   resetGame: () => dispatch(Action.ActionCreator.resetState())

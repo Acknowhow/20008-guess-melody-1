@@ -12,7 +12,6 @@ const Operation = {
       .then((response) => response.json())
       .then((questions) => {
         dispatch(ActionCreator.loadQuestions(questions));
-        console.log(questions)
       });
   }
 };
@@ -62,29 +61,25 @@ const isGenreAnswerCorrect = (userAnswer, question) =>
     question.answers[i].genre === question.genre
   ));
 
-const proceedOnUserAnswer = (answerIsCorrect, mistakes, maxMistakes) => {
+const proceedOnUserAnswer = (answerIsCorrect) => {
 
-  if (!answerIsCorrect && mistakes + 1 < maxMistakes) {
+  if (!answerIsCorrect) {
     return ActionCreator.incrementMistake();
-  }
-
-  if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
-    return ActionCreator.resetState();
   }
 
   return ActionCreator.staleMistake();
 };
 
-const onGenreUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
+const onGenreUserAnswer = (userAnswer, question) => {
   const answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
 
-  return proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+  return proceedOnUserAnswer(answerIsCorrect);
 };
 
-const onArtistUserAnswer = (userAnswer, question, mistakes, maxMistakes) => {
+const onArtistUserAnswer = (userAnswer, question) => {
   const answerIsCorrect = isArtistAnswerCorrect(userAnswer, question);
 
-  return proceedOnUserAnswer(answerIsCorrect, mistakes, maxMistakes);
+  return proceedOnUserAnswer(answerIsCorrect);
 };
 
 
@@ -110,6 +105,9 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         questions: action.payload,
       });
+
+    case ActionType.RESET:
+      return Object.assign({}, initialState);
   }
 
   return state;
