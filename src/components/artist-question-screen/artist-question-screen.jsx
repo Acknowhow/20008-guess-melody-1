@@ -23,7 +23,7 @@ export default class ArtistQuestionScreen extends PureComponent {
               type="radio" name="answer"
               value={`artist-${i}`}
               id={`artist-${i}`}
-              onChange={() => onAnswer(it)}
+              onClick={() => onAnswer(it)}
             />
             <label className="artist__name" htmlFor={`artist-${i}`}>
               <img className="artist__picture" src={it.picture} alt={it.artist} />
