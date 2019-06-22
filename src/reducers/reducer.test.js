@@ -127,8 +127,8 @@ describe(`Action creator works correctly`, () => {
       payload: 0,
     });
 
-    expect(ActionCreator.resetState()).toEqual({
-      type: `RESET`,
+    expect(ActionCreator.resetGame()).toEqual({
+      type: `RESET_GAME`,
     });
 
   });
@@ -207,7 +207,7 @@ describe(`Reducer works correctly`, () => {
       step: -1000,
       mistakes: 123,
     }, {
-      type: `RESET`,
+      type: `RESET_GAME`,
     })).toEqual({
       step: -1,
       mistakes: 0,

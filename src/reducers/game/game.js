@@ -1,19 +1,9 @@
-import {ActionType} from './../data';
+import {ActionType} from './../../data';
 
 const initialState = {
   step: -1,
   mistakes: 0
 };
-
-const Operation = {
-  loadQuestions: () => (dispatch, _getState, api) => {
-    return api.get(`/questions`)
-      .then((response) => {
-        dispatch(ActionCreator.loadQuestions(response.data));
-      });
-  },
-};
-
 
 const ActionCreator = {
   incrementStep: () => {
@@ -37,9 +27,9 @@ const ActionCreator = {
     };
   },
 
-  resetState: () => {
+  resetGame: () => {
     return {
-      type: ActionType.RESET,
+      type: ActionType.RESET_GAME,
     };
   }
 };
@@ -102,7 +92,7 @@ const reducer = (state = initialState, action) => {
         isAuthorizationRequired: action.payload,
       });
 
-    case ActionType.RESET:
+    case ActionType.RESET_GAME:
       return Object.assign({}, initialState);
   }
 
@@ -115,6 +105,5 @@ export {
   onGenreUserAnswer,
   onArtistUserAnswer,
   ActionCreator,
-  reducer,
-  Operation
+  reducer
 };

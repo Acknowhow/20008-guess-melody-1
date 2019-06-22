@@ -13,7 +13,7 @@ import AuthorizationScreen from '../../components/authorization-screen/authoriza
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
 import withTransformProps from '../with-transform-props/with-transform-props';
-import * as Action from '../../reducers/reducer';
+import * as Action from '../../reducers/game/game';
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -122,10 +122,10 @@ const withScreenSwitch = (Component) => {
 
 const mapStateToProps = (state, ownProps) => Object.assign(
   {}, ownProps, {
-    step: state.step,
-    mistakes: state.mistakes,
-    questions: state.questions,
-    isAuthorizationRequired: state.isAuthorizationRequired
+    step: state.game.step,
+    mistakes: state.game.mistakes,
+    questions: state.data.questions,
+    isAuthorizationRequired: state.user.isAuthorizationRequired
   });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -141,7 +141,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Action.onArtistUserAnswer(userAnswer, question));
   },
 
-  resetGame: () => dispatch(Action.ActionCreator.resetState())
+  resetGame: () => dispatch(Action.ActionCreator.resetGame())
 });
 
 export default compose(

@@ -1,9 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../api';
 import {
-  ActionType,
   Operation,
 } from './data';
+import {ActionType} from './../../data';
 
 
 describe(`Reducer works correctly`, () => {
