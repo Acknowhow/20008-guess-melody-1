@@ -18,6 +18,7 @@ const withAudio = (Component) => {
     }
 
     _renderAudio() {
+
       return (
         <audio ref={this._audioRef} />
         );
@@ -61,6 +62,7 @@ const withAudio = (Component) => {
     componentDidUpdate() {
       const audio = this._audioRef.current;
 
+      console.log(audio)
       if (this.props.isPlaying) {
         audio.play();
       } else {

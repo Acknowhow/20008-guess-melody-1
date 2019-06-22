@@ -14,7 +14,7 @@ export default class ArtistQuestionScreen extends PureComponent {
       <section className="game__screen">
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
-          {renderPlayer(song, 0)}
+          {renderPlayer(song, song.artist)}
         </div>
 
         <form className="game__artist">

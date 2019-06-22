@@ -23,6 +23,7 @@ const withUserAnswer = (Component) => {
 
     _onAnswer() {
       const {onAnswer} = this.props;
+
       onAnswer(this.state.userAnswer);
     }
 

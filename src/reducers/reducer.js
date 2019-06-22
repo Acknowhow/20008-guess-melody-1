@@ -1,19 +1,19 @@
 import {ActionType} from './../data';
-import api from './../api';
 
 const initialState = {
   step: -1,
   mistakes: 0,
-  questions: []
+  questions: [],
+  isAuthorizationRequired: false
 };
 
 const Operation = {
-  loadQuestions: () => (dispatch) => {
+  loadQuestions: () => (dispatch, _getState, api) => {
     return api.get(`/questions`)
       .then((response) => {
         dispatch(ActionCreator.loadQuestions(response.data));
       });
-  }
+  },
 };
 
 
@@ -22,6 +22,13 @@ const ActionCreator = {
     return {
       type: ActionType.LOAD_QUESTIONS,
       payload: questions,
+    };
+  },
+
+  requireAuthorization: (status) => {
+    return {
+      type: ActionType.REQUIRE_AUTHORIZATION,
+      payload: status,
     };
   },
 
@@ -104,6 +111,11 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_QUESTIONS:
       return Object.assign({}, state, {
         questions: action.payload,
+      });
+
+    case ActionType.REQUIRE_AUTHORIZATION:
+      return Object.assign({}, state, {
+        isAuthorizationRequired: action.payload,
       });
 
     case ActionType.RESET:

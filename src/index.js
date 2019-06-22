@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import {compose} from "recompose";
 
 import App from './components/app/app.jsx';
-
+import {createAPI} from './api';
 import {reducer, Operation} from './reducers/reducer';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
 
@@ -17,11 +17,12 @@ const settings = {
 const AppWrapped = withScreenSwitch(App);
 
 const init = () => {
+  const api = createAPI((...args) => store.dispatch(...args));
   const store = createStore(
     reducer,
 
     compose(
-      applyMiddleware(thunk),
+      applyMiddleware(thunk.withExtraArgument(api)),
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__()
     ));
