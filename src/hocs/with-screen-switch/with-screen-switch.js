@@ -71,7 +71,8 @@ const withScreenSwitch = (Component) => {
         maxMistakes,
         onGenreUserAnswer,
         onArtistUserAnswer,
-        resetGame
+        resetGame,
+        step
       } = this.props;
 
       if (mistakes >= maxMistakes) {
@@ -90,6 +91,7 @@ const withScreenSwitch = (Component) => {
         case `artist`: return <ArtistQuestionScreenWrapped
           question={question}
           onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question)}
+          step={step}
         />;
       }
 

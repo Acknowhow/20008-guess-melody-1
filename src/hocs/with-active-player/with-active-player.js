@@ -39,12 +39,13 @@ const withActivePlayer = (Component) => {
       return (
         <Component
           {...this.props}
-
           renderPlayer={(it, i) => {
+
             return (<AudioPlayerWrapped
               isPlaying={i === activePlayer}
               onPlayButtonClick={this._getOnPlayButtonClick(i)}
               src={it.src}
+              renderPlayerId={i}
             />);
           }}
         />);
