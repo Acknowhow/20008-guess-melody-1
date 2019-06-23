@@ -34,6 +34,7 @@ it(`ArtistQuestionScreen is rendered correctly`, () => {
     onAnswer={jest.fn()}
     question={question}
     renderPlayer={jest.fn()}
+    step={1}
   />, {
     createNodeMock: () => {
       return {};

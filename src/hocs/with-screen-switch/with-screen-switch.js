@@ -15,6 +15,11 @@ import withUserAnswer from '../with-user-answer/with-user-answer';
 import withTransformProps from '../with-transform-props/with-transform-props';
 import * as Action from '../../reducers/game/game';
 
+import {getStep} from '../../reducers/game/selectors';
+import {getMistakes} from '../../reducers/game/selectors';
+import {getQuestions} from '../../reducers/data/selectors';
+import {getAuthorizationStatus} from '../../reducers/user/selectors';
+
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
     renderAnswer: props.renderPlayer
@@ -124,10 +129,10 @@ const withScreenSwitch = (Component) => {
 
 const mapStateToProps = (state, ownProps) => Object.assign(
   {}, ownProps, {
-    step: state.game.step,
-    mistakes: state.game.mistakes,
-    questions: state.data.questions,
-    isAuthorizationRequired: state.user.isAuthorizationRequired
+    step: getStep(state),
+    mistakes: getMistakes(state),
+    questions: getQuestions(state),
+    isAuthorizationRequired: getAuthorizationStatus(state)
   });
 
 const mapDispatchToProps = (dispatch) => ({

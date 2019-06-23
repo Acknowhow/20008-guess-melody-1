@@ -38,6 +38,7 @@ it(`User answer click should pass data-object which was used to create it`, () =
     onAnswer={onAnswer}
     renderPlayer={jest.fn()}
     question={question}
+    step={1}
   />);
 
   const answerInputs = screen.find(`input`);
@@ -45,9 +46,9 @@ it(`User answer click should pass data-object which was used to create it`, () =
   const answerPaul = answerInputs.at(1);
   const answerGary = answerInputs.at(2);
 
-  answerSinead.simulate(`change`);
-  answerPaul.simulate(`change`);
-  answerGary.simulate(`change`);
+  answerSinead.simulate(`click`);
+  answerPaul.simulate(`click`);
+  answerGary.simulate(`click`);
 
   expect(onAnswer).toHaveBeenCalledTimes(3);
 
