@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class ArtistQuestionScreen extends PureComponent {
   render() {
-    const {question, onAnswer, renderPlayer} = this.props;
+    const {question, onAnswer, renderPlayer, step} = this.props;
 
     const {
       answers,
@@ -14,7 +14,7 @@ export default class ArtistQuestionScreen extends PureComponent {
       <section className="game__screen">
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
-          {renderPlayer(song, 0)}
+          {renderPlayer(song, step)}
         </div>
 
         <form className="game__artist">
@@ -23,7 +23,7 @@ export default class ArtistQuestionScreen extends PureComponent {
               type="radio" name="answer"
               value={`artist-${i}`}
               id={`artist-${i}`}
-              onChange={() => onAnswer(it)}
+              onClick={() => onAnswer(it)}
             />
             <label className="artist__name" htmlFor={`artist-${i}`}>
               <img className="artist__picture" src={it.picture} alt={it.artist} />
@@ -36,6 +36,7 @@ export default class ArtistQuestionScreen extends PureComponent {
 }
 
 ArtistQuestionScreen.propTypes = {
+  step: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
   renderPlayer: PropTypes.func.isRequired,
   question: PropTypes.shape({

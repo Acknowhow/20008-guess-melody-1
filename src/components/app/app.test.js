@@ -62,6 +62,7 @@ it(`App correctly renders WelcomeScreen`, () => {
       onWelcomeScreenClick={jest.fn()}
       onGenreUserAnswer={jest.fn()}
       onArtistUserAnswer={jest.fn()}
+      renderScreen={jest.fn()}
     />)
     .toJSON();
 
@@ -80,6 +81,7 @@ it(`App correctly renders genre question screen`, () => {
       onWelcomeScreenClick={jest.fn()}
       onGenreUserAnswer={jest.fn()}
       onArtistUserAnswer={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};
@@ -102,6 +104,7 @@ it(`App correctly renders artist question screen`, () => {
       onWelcomeScreenClick={jest.fn()}
       onGenreUserAnswer={jest.fn()}
       onArtistUserAnswer={jest.fn()}
+      renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
         return {};

@@ -3,7 +3,7 @@ import {
   isGenreAnswerCorrect,
   ActionCreator,
   reducer,
-} from './reducer';
+} from './game';
 
 describe(`Business logic is correct`, () => {
   it(`Artist answer is checked correctly`, () => {
@@ -60,53 +60,53 @@ describe(`Business logic is correct`, () => {
 
   it(`Genre question is checked correctly`, () => {
     expect(isGenreAnswerCorrect(
-        [false, false, true, false], {
-          type: `genre`,
-          genre: `rock`,
-          answers: [
-            {
-              genre: `jazz`,
-              src: `0`,
-            },
-            {
-              genre: `blues`,
-              src: `1`,
-            },
-            {
-              genre: `rock`,
-              src: `2`,
-            },
-            {
-              genre: `jazz`,
-              src: `3`,
-            },
-          ]
-        })).toEqual(true);
+      [false, false, true, false], {
+        type: `genre`,
+        genre: `rock`,
+        answers: [
+          {
+            genre: `jazz`,
+            src: `0`,
+          },
+          {
+            genre: `blues`,
+            src: `1`,
+          },
+          {
+            genre: `rock`,
+            src: `2`,
+          },
+          {
+            genre: `jazz`,
+            src: `3`,
+          },
+        ]
+      })).toEqual(true);
 
 
     expect(isGenreAnswerCorrect(
-        [false, false, false, false], {
-          type: `genre`,
-          genre: `jazz`,
-          answers: [
-            {
-              genre: `jazz`,
-              src: `0`,
-            },
-            {
-              genre: `jazz`,
-              src: `1`,
-            },
-            {
-              genre: `rock`,
-              src: `2`,
-            },
-            {
-              genre: `blues`,
-              src: `3`,
-            },
-          ]
-        })).toEqual(false);
+      [false, false, false, false], {
+        type: `genre`,
+        genre: `jazz`,
+        answers: [
+          {
+            genre: `jazz`,
+            src: `0`,
+          },
+          {
+            genre: `jazz`,
+            src: `1`,
+          },
+          {
+            genre: `rock`,
+            src: `2`,
+          },
+          {
+            genre: `blues`,
+            src: `3`,
+          },
+        ]
+      })).toEqual(false);
   });
 });
 
@@ -127,8 +127,8 @@ describe(`Action creator works correctly`, () => {
       payload: 0,
     });
 
-    expect(ActionCreator.resetState()).toEqual({
-      type: `RESET`,
+    expect(ActionCreator.resetGame()).toEqual({
+      type: `RESET_GAME`,
     });
 
   });
@@ -207,7 +207,7 @@ describe(`Reducer works correctly`, () => {
       step: -1000,
       mistakes: 123,
     }, {
-      type: `RESET`,
+      type: `RESET_GAME`,
     })).toEqual({
       step: -1,
       mistakes: 0,
