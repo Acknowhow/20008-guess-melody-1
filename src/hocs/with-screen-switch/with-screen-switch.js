@@ -17,7 +17,7 @@ import * as Action from '../../reducers/game/game';
 
 import {getStep} from '../../reducers/game/selectors';
 import {getMistakes} from '../../reducers/game/selectors';
-import {getQuestions} from '../../reducers/data/selectors';
+import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getAuthorizationStatus} from '../../reducers/user/selectors';
 
 const transformPlayerToAnswer = (props) => {
@@ -30,11 +30,11 @@ const transformPlayerToAnswer = (props) => {
 };
 
 const ArtistQuestionScreenWrapped = withActivePlayer(
-  ArtistQuestionScreen);
+    ArtistQuestionScreen);
 
 const GenreQuestionScreenWrapped = withActivePlayer(
-  withUserAnswer(
-    withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
+    withUserAnswer(
+        withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
 
 
 const withScreenSwitch = (Component) => {
@@ -128,12 +128,12 @@ const withScreenSwitch = (Component) => {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign(
-  {}, ownProps, {
-    step: getStep(state),
-    mistakes: getMistakes(state),
-    questions: getQuestions(state),
-    isAuthorizationRequired: getAuthorizationStatus(state)
-  });
+    {}, ownProps, {
+      step: getStep(state),
+      mistakes: getMistakes(state),
+      questions: getSelectedQuestions(state),
+      isAuthorizationRequired: getAuthorizationStatus(state)
+    });
 
 const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => dispatch(Action.ActionCreator.incrementStep()),
@@ -152,6 +152,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withScreenSwitch
+    connect(mapStateToProps, mapDispatchToProps),
+    withScreenSwitch
 );
