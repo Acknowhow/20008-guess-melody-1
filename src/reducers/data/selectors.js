@@ -8,17 +8,13 @@ export const getQuestions = (state) => {
   return state[NAME_SPACE].questions;
 };
 
-const getQuestionType = (state) => {
-  return getQuestions(state)[getStep(state)];
-};
-
 export const getSelectedQuestions = createSelector(
   getQuestions,
-  getQuestionType,
-  (questions, question) => {
+  getStep,
+  (questions, step) => {
 
-    if (question) {
-      switch (question.type) {
+    if (questions[step]) {
+      switch (questions[step].type) {
         case `genre`:
 
           return questions.filter((it) => it.type === `genre`);
