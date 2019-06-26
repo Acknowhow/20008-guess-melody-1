@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {GameType} from '../../data';
-import {getQuestions} from '../../reducers/data/selectors';
+import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getStep} from '../../reducers/game/selectors';
 
 class App extends Component {
@@ -59,7 +59,7 @@ App.propTypes = {
 
 const mapStateToProps = (state, ownProps) => Object.assign(
     {}, ownProps, {
-      questions: getQuestions(state),
+      questions: getSelectedQuestions(state),
       step: getStep(state),
     });
 

@@ -13,12 +13,14 @@ import AuthorizationScreen from '../../components/authorization-screen/authoriza
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
 import withTransformProps from '../with-transform-props/with-transform-props';
-import * as Action from '../../reducers/game/game';
+
+import * as GameAction from '../../reducers/game/game';
+import * as UserAction from '../../reducers/user/user';
 
 import {getStep} from '../../reducers/game/selectors';
 import {getMistakes} from '../../reducers/game/selectors';
-import {getQuestions} from '../../reducers/data/selectors';
-import {getAuthorizationStatus} from '../../reducers/user/selectors';
+import {getSelectedQuestions} from '../../reducers/data/selectors';
+import {getAuthorizationStatus, getCredentials} from '../../reducers/user/selectors';
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -30,11 +32,11 @@ const transformPlayerToAnswer = (props) => {
 };
 
 const ArtistQuestionScreenWrapped = withActivePlayer(
-  ArtistQuestionScreen);
+    ArtistQuestionScreen);
 
 const GenreQuestionScreenWrapped = withActivePlayer(
-  withUserAnswer(
-    withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
+    withUserAnswer(
+        withTransformProps(transformPlayerToAnswer)(GenreQuestionScreen)));
 
 
 const withScreenSwitch = (Component) => {
@@ -46,8 +48,12 @@ const withScreenSwitch = (Component) => {
     }
 
     _getScreen(question) {
+
       if (this.props.isAuthorizationRequired) {
-        return <AuthorizationScreen />;
+        const {onAuthorizationScreenSubmit} = this.props;
+
+        return <AuthorizationScreen
+          handleSubmit={(submitData) => onAuthorizationScreenSubmit(submitData)}/>;
       }
 
       if (!question) {
@@ -118,9 +124,11 @@ const withScreenSwitch = (Component) => {
     gameTime: PropTypes.number.isRequired,
     questions: PropTypes.array.isRequired,
     step: PropTypes.number.isRequired,
+    credentials: PropTypes.object,
     onWelcomeScreenClick: PropTypes.func.isRequired,
     onGenreUserAnswer: PropTypes.func.isRequired,
     onArtistUserAnswer: PropTypes.func.isRequired,
+    onAuthorizationScreenSubmit: PropTypes.func.isRequired,
     resetGame: PropTypes.func.isRequired
   };
 
@@ -128,30 +136,36 @@ const withScreenSwitch = (Component) => {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign(
-  {}, ownProps, {
-    step: getStep(state),
-    mistakes: getMistakes(state),
-    questions: getQuestions(state),
-    isAuthorizationRequired: getAuthorizationStatus(state)
-  });
+    {}, ownProps, {
+      step: getStep(state),
+      mistakes: getMistakes(state),
+      questions: getSelectedQuestions(state),
+      isAuthorizationRequired: getAuthorizationStatus(state),
+      credentials: getCredentials(state)
+    });
 
 const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(Action.ActionCreator.incrementStep()),
+  onWelcomeScreenClick: () => dispatch(GameAction.ActionCreator.incrementStep()),
+
+  onAuthorizationScreenSubmit: (submitData) => {
+
+    dispatch(UserAction.Operation.sendCredentials(submitData));
+  },
 
   onGenreUserAnswer: (userAnswer, question) => {
-    dispatch(Action.ActionCreator.incrementStep());
-    dispatch(Action.onGenreUserAnswer(userAnswer, question));
+    dispatch(GameAction.ActionCreator.incrementStep());
+    dispatch(GameAction.onGenreUserAnswer(userAnswer, question));
   },
 
   onArtistUserAnswer: (userAnswer, question) => {
-    dispatch(Action.ActionCreator.incrementStep());
-    dispatch(Action.onArtistUserAnswer(userAnswer, question));
+    dispatch(GameAction.ActionCreator.incrementStep());
+    dispatch(GameAction.onArtistUserAnswer(userAnswer, question));
   },
 
-  resetGame: () => dispatch(Action.ActionCreator.resetGame())
+  resetGame: () => dispatch(GameAction.ActionCreator.resetGame())
 });
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withScreenSwitch
+    connect(mapStateToProps, mapDispatchToProps),
+    withScreenSwitch
 );
