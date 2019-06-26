@@ -24,9 +24,6 @@ export const getSelectedQuestions = createSelector(
           return questions.filter((it) => it.type === `artist`);
       }
     }
-
     return questions;
   }
 );
-
-
