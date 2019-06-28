@@ -60,7 +60,8 @@ const withScreenSwitch = (Component) => {
         onWelcomeScreenClick
       } = this.props;
 
-      if (step > questions.length) {
+
+      if (step >= questions.length) {
         return <Redirect to="/win" />;
       }
 
@@ -102,10 +103,13 @@ const withScreenSwitch = (Component) => {
               {...this.props}
               renderScreen={this._getScreen}
             />} />
-            <Route path="/login" render={() => <AuthorizationScreen
-              handleSubmit={(submitData) => onAuthorizationScreenSubmit(submitData)}/>} />
+            <Route path="/win" render={() => <WinScreen
+              onReplayButtonClick={resetGame}
+            />} />
+            <Route path="/login" render={() =>
+              <AuthorizationScreen
+                handleSubmit={(submitData) => onAuthorizationScreenSubmit(submitData)}/>} />
 
-            <Route path="/win" component={WinScreen} />
             <Route path="/lose" render={() => <GameOverScreen
               onRelaunchButtonClick={resetGame} />} />
           </Switch>

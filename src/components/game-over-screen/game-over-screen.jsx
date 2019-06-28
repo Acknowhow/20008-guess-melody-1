@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-const GameOverScreen = ({onRelaunchButtonClick = () => {}}) => {
+const GameOverScreen = ({onRelaunchButtonClick}) => {
   return <section className="result">
     <div className="result__logo">
       <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
