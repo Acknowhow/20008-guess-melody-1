@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
-import {Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
 import WinScreen from '../../components/win-screen/win-screen.jsx';
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
@@ -49,71 +49,67 @@ const withScreenSwitch = (Component) => {
     }
 
     _getScreen(question) {
-
-      if (!question) {
-        const {step, questions} = this.props;
-        if (step > questions.length - 1) {
-          return <WinScreen/>;
-
-        } else {
-
-          const {
-            maxMistakes,
-            gameTime,
-            onWelcomeScreenClick
-          } = this.props;
-
-          return <WelcomeScreen
-            errorCount={maxMistakes}
-            time={gameTime}
-            handleClick={onWelcomeScreenClick}
-          />;
-        }
-      }
-
       const {
-        mistakes,
+        gameTime,
         maxMistakes,
+        mistakes,
+        questions,
+        step,
         onGenreUserAnswer,
         onArtistUserAnswer,
-        resetGame,
-        step
+        onWelcomeScreenClick
       } = this.props;
 
+      if (step > questions.length) {
+        return <Redirect to="/win" />;
+      }
+
       if (mistakes >= maxMistakes) {
-        return <GameOverScreen
-          onRelaunchButtonClick={resetGame}
-        />;
+        return <Redirect to="/lose" />;
+      }
+
+      if (step === -1) {
+        return <WelcomeScreen
+          errorCount={maxMistakes}
+          time={gameTime}
+          handleClick={onWelcomeScreenClick} />
       }
 
       switch (question.type) {
         case `genre`: return <GenreQuestionScreenWrapped
           answers={question.answers}
           question={question}
-          onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question)}
-        />;
+          onAnswer={(userAnswer) => onGenreUserAnswer(userAnswer, question)} />;
 
         case `artist`: return <ArtistQuestionScreenWrapped
           question={question}
           onAnswer={(userAnswer) => onArtistUserAnswer(userAnswer, question)}
-          step={step}
-        />;
+          step={step} />;
       }
 
       return null;
     }
 
     render() {
-      const {onAuthorizationScreenSubmit} = this.props;
+      const {
+        onAuthorizationScreenSubmit,
+        resetGame} = this.props;
 
-      return <Switch>
-        <Route path="/" exact render={() => <Component
-          {...this.props}
-          renderScreen={this._getScreen}
-        />} />
-        <Route path="/login" render={() => <AuthorizationScreen
-          handleSubmit={(submitData) => onAuthorizationScreenSubmit(submitData)}/>} />
-      </Switch>;
+      return (
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact render={() => <Component
+              {...this.props}
+              renderScreen={this._getScreen}
+            />} />
+            <Route path="/login" render={() => <AuthorizationScreen
+              handleSubmit={(submitData) => onAuthorizationScreenSubmit(submitData)}/>} />
+
+            <Route path="/win" component={WinScreen} />
+            <Route path="/lose" render={() => <GameOverScreen
+              onRelaunchButtonClick={resetGame} />} />
+          </Switch>
+        </BrowserRouter>);
     }
   }
 

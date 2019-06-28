@@ -1,7 +1,7 @@
 import {ActionType} from './../../data';
 
 const initialState = {
-  isAuthorizationRequired: true,
+  isAuthorizationRequired: false,
   credentials: {}
 };
 
@@ -22,16 +22,20 @@ const ActionCreator = {
 };
 
 const Operation = {
+  // CheckAuth at the end of the game, if credentials is empty,
+  // then Authorization is required
   sendCredentials: (submitData) => (dispatch, _getState, api) => {
     return api.post(`/login`, submitData)
       .then((response) => {
         if (response === 400) {
+
+          // If authorization is required and id: null, then => display error
           dispatch(ActionCreator.sendCredentials({id: null}));
-          dispatch(ActionCreator.requireAuthorization(true))
+          dispatch(ActionCreator.requireAuthorization(true));
         } else {
 
           dispatch(ActionCreator.sendCredentials(response.data));
-          dispatch(ActionCreator.requireAuthorization(false))
+          dispatch(ActionCreator.requireAuthorization(false));
         }
 
       });
