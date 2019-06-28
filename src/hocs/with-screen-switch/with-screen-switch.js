@@ -51,6 +51,7 @@ const withScreenSwitch = (Component) => {
     _getScreen(question) {
       const {
         gameTime,
+        isAuthorizationRequired,
         maxMistakes,
         mistakes,
         questions,
@@ -60,8 +61,10 @@ const withScreenSwitch = (Component) => {
         onWelcomeScreenClick
       } = this.props;
 
+      if (step >= questions.length && isAuthorizationRequired) {
+        return <Redirect to="/login"/>;
+      } else if (step >= questions.length) {
 
-      if (step >= questions.length) {
         return <Redirect to="/win" />;
       }
 
@@ -73,7 +76,7 @@ const withScreenSwitch = (Component) => {
         return <WelcomeScreen
           errorCount={maxMistakes}
           time={gameTime}
-          handleClick={onWelcomeScreenClick} />
+          handleClick={onWelcomeScreenClick} />;
       }
 
       switch (question.type) {

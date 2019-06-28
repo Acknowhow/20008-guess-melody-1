@@ -19,7 +19,8 @@ const settings = {
 const AppWrapped = withScreenSwitch(App);
 
 const init = () => {
-  const api = createAPI((...args) => store.dispatch(...args));
+  const api = createAPI(
+    () => history.pushState(null, null, `/login`));
   const store = createStore(
     reducer,
 
