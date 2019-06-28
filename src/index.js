@@ -2,8 +2,9 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from "redux-thunk";
-import {compose} from "recompose";
+import thunk from 'redux-thunk';
+import {compose} from 'recompose';
+import {BrowserRouter} from 'react-router-dom';
 
 import App from './components/app/app.jsx';
 import {createAPI} from './api';
@@ -28,17 +29,18 @@ const init = () => {
       window.__REDUX_DEVTOOLS_EXTENSION__()
     ));
 
-
   store.dispatch(Operation.loadQuestions());
 
-  ReactDOM.render(<Provider store={store}>
-    <AppWrapped
-      maxMistakes={settings.errorCount}
-      gameTime={settings.gameTime}
-    />
-  </Provider>,
-  document.querySelector(`.main`)
-  );
+  ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <AppWrapped
+        maxMistakes={settings.errorCount}
+        gameTime={settings.gameTime}
+      />
+    </Provider>
+  </BrowserRouter>,
+  document.querySelector(`.main`));
 };
 
 init();

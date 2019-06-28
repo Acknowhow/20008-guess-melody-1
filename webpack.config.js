@@ -9,6 +9,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, `public`),
+    historyApiFallback: true,
     compress: false,
     publicPath: `http://localhost:8084/`,
     hot: true,
