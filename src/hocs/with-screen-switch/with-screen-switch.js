@@ -23,6 +23,10 @@ import {getMistakes} from '../../reducers/game/selectors';
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getAuthorizationStatus, getCredentials} from '../../reducers/user/selectors';
 
+import primitives from '../../ts/1-primitives.ts';
+
+primitives();
+
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
     renderAnswer: props.renderPlayer
