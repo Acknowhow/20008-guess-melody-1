@@ -20,11 +20,12 @@ createMessage(12, true); // OK
  * Объекты
  */
 
-const logObject = (obj: {foo: string, bar: string}): void => {
-  console.log(obj);
+const logObject = (obj: {foo: string, bar: string}): object => {
+
+  return Object.assign({}, obj, {foo: obj.foo + `12`});
 };
 
-logObject({foo: `foo`, bar: `bar`}); // OK
+console.log(logObject({foo: `foo`, bar: `bar`})); // OK
 
 
 const logArray = (arr: string[]): void => {

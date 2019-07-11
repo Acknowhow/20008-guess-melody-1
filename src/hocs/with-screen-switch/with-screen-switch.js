@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+
 import {compose} from 'recompose';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
@@ -23,9 +23,11 @@ import {getMistakes} from '../../reducers/game/selectors';
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getAuthorizationStatus, getCredentials} from '../../reducers/user/selectors';
 
-import primitives from '../../ts/1-primitives.ts';
+import PropTypes from 'prop-types';
 
-primitives();
+// import types from '../../ts/3-types.ts';
+//
+// types();
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
