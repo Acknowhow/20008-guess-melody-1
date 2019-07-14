@@ -1,12 +1,21 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 
-import {GameType} from '../../data';
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getStep} from '../../reducers/game/selectors';
 
-class App extends Component {
+enum GameType {
+  ARTIST = "game--artist",
+  GENRE = "game--genre",
+}
+
+interface Props {
+  questions: [],
+  step: number,
+  renderScreen: (question) => React.ReactElement
+}
+
+class App extends React.Component<Props, null> {
   render() {
     const {
       questions,
@@ -32,7 +41,7 @@ class App extends Component {
             />
           </svg>
 
-          <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
+          <div className="timer__value">
             <span className="timer__mins">05</span>
             <span className="timer__dots">:</span>
             <span className="timer__secs">00</span>
@@ -51,11 +60,6 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  questions: PropTypes.array.isRequired,
-  step: PropTypes.number.isRequired,
-  renderScreen: PropTypes.func.isRequired
-};
 
 const mapStateToProps = (state, ownProps) => Object.assign(
     {}, ownProps, {

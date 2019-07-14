@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 import {BrowserRouter} from 'react-router-dom';
 
-import App from './components/app/app.jsx';
+import App from './components/app/app.tsx';
 import {createAPI} from './api';
 import reducer from './reducers/reducer';
 import {Operation} from './reducers/data/data';
