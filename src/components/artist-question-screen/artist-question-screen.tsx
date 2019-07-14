@@ -1,7 +1,14 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import {QuestionArtist, Song, AnswerArtist} from '../../types';
 
-export default class ArtistQuestionScreen extends PureComponent {
+interface Props {
+  onAnswer: (answer: AnswerArtist) => void,
+  renderPlayer: (song: Song, id: number) => React.ReactElement,
+  question: QuestionArtist,
+  step: number
+}
+
+class ArtistQuestionScreen extends React.PureComponent<Props, null> {
   render() {
     const {question, onAnswer, renderPlayer, step} = this.props;
 
@@ -35,19 +42,4 @@ export default class ArtistQuestionScreen extends PureComponent {
   }
 }
 
-ArtistQuestionScreen.propTypes = {
-  step: PropTypes.number.isRequired,
-  onAnswer: PropTypes.func.isRequired,
-  renderPlayer: PropTypes.func.isRequired,
-  question: PropTypes.shape({
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired,
-    })).isRequired,
-    song: PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      src: PropTypes.string.isRequired,
-    }).isRequired,
-    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
-  }).isRequired,
-};
+export default ArtistQuestionScreen;

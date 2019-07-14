@@ -25,10 +25,13 @@ module.exports = {
         },
       },
       {
-        test: /\.tsx?$/,
+        test: /\.(tsx|ts)?$/,
         loader: `ts-loader`
       }
     ],
+  },
+  resolve: {
+    extensions: [`.ts`, `.tsx`, `.js`, `json`]
   },
   devtool: `source-map`
 };

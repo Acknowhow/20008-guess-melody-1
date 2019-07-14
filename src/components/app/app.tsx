@@ -3,37 +3,9 @@ import {connect} from 'react-redux';
 
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getStep} from '../../reducers/game/selectors';
-
-enum Type {
-  ARTIST = "artist",
-  GENRE = "genre",
-}
+import {Type, QuestionArtist, QuestionGenre} from '../../types';
 
 type Question = QuestionArtist | QuestionGenre;
-
-interface QuestionGenre {
-  answers: {
-    src: string,
-    genre: string
-  }[],
-
-  genre: string,
-  type: Type
-}
-
-interface QuestionArtist {
-  answers: {
-    picture: string,
-    artist: string
-  }[],
-
-  song: {
-    artist: string,
-    src: string
-  },
-
-  type: Type
-}
 
 interface Props {
   questions: Question[],

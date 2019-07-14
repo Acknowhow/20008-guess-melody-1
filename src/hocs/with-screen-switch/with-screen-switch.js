@@ -8,7 +8,7 @@ import WinScreen from '../../components/win-screen/win-screen.jsx';
 import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
 import GameOverScreen from '../../components/game-over-screen/game-over-screen.jsx';
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.jsx';
-import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.jsx';
+import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.tsx';
 import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.jsx';
 
 import withActivePlayer from '../with-active-player/with-active-player';
