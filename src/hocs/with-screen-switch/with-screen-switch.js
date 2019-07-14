@@ -25,9 +25,9 @@ import {getAuthorizationStatus, getCredentials} from '../../reducers/user/select
 
 import PropTypes from 'prop-types';
 
-// import types from '../../ts/3-types.ts';
-//
-// types();
+import duckTypes from '../../ts/6-duck-types.ts';
+
+duckTypes();
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
