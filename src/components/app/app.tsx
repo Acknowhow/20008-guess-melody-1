@@ -4,15 +4,41 @@ import {connect} from 'react-redux';
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getStep} from '../../reducers/game/selectors';
 
-enum GameType {
-  ARTIST = "game--artist",
-  GENRE = "game--genre",
+enum Type {
+  ARTIST = "artist",
+  GENRE = "genre",
+}
+
+type Question = QuestionArtist | QuestionGenre;
+
+interface QuestionGenre {
+  answers: {
+    src: string,
+    genre: string
+  }[],
+
+  genre: string,
+  type: Type
+}
+
+interface QuestionArtist {
+  answers: {
+    picture: string,
+    artist: string
+  }[],
+
+  song: {
+    artist: string,
+    src: string
+  },
+
+  type: Type
 }
 
 interface Props {
-  questions: [],
+  questions: Question[],
   step: number,
-  renderScreen: (question) => React.ReactElement
+  renderScreen: (question: Question) => React.ReactElement
 }
 
 class App extends React.Component<Props, null> {
@@ -24,7 +50,7 @@ class App extends React.Component<Props, null> {
     } = this.props;
 
     return (
-      <section className={`game ${GameType.ARTIST}`}>
+      <section className={`game game--${Type.ARTIST}`}>
         <header className="game__header">
           <a className="game__back" href="#">
             <span className="visually-hidden">Сыграть ещё раз</span>
