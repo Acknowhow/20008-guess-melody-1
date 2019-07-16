@@ -1,12 +1,16 @@
 import * as React from 'react';
-// import PropTypes from 'prop-types';
+
+interface formEntry {
+  email: string,
+  password: string
+}
 
 interface Props {
-  handleSubmit: () => void
+  handleSubmit: (entry: formEntry) => void
 }
 
 class AuthorizationScreen extends React.PureComponent<Props, null> {
-  private _formRef: React.RefObject<HTMLAudioElement>;
+  private _formRef: React.RefObject<HTMLFormElement>;
 
   constructor(props) {
     super(props);
@@ -84,10 +88,6 @@ class AuthorizationScreen extends React.PureComponent<Props, null> {
       </section>);
   }
 }
-
-// AuthorizationScreen.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-// };
 
 export default AuthorizationScreen;
 
