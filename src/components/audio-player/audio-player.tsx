@@ -1,7 +1,14 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-export default class AudioPlayer extends PureComponent {
+interface Props {
+  isLoading: boolean,
+  isPlaying: boolean,
+  renderAudio: () => React.ReactElement,
+  onPlayButtonClick: () => void
+  // add src if needed
+}
+
+class AudioPlayer extends React.PureComponent<Props, null> {
   render() {
     const {
       isLoading,
@@ -25,10 +32,4 @@ export default class AudioPlayer extends PureComponent {
   }
 }
 
-AudioPlayer.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
-  renderAudio: PropTypes.func.isRequired,
-  src: PropTypes.string.isRequired,
-};
+export default AudioPlayer;

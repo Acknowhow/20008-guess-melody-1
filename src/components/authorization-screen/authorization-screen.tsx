@@ -1,11 +1,17 @@
-import React, {createRef, PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+// import PropTypes from 'prop-types';
 
-class AuthorizationScreen extends PureComponent {
+interface Props {
+  handleSubmit: () => void
+}
+
+class AuthorizationScreen extends React.PureComponent<Props, null> {
+  private _formRef: React.RefObject<HTMLAudioElement>;
+
   constructor(props) {
     super(props);
 
-    this._formRef = createRef();
+    this._formRef = React.createRef();
     this._submitForm = this._submitForm.bind(this);
   }
 
@@ -79,9 +85,9 @@ class AuthorizationScreen extends PureComponent {
   }
 }
 
-AuthorizationScreen.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-};
+// AuthorizationScreen.propTypes = {
+//   handleSubmit: PropTypes.func.isRequired,
+// };
 
 export default AuthorizationScreen;
 
