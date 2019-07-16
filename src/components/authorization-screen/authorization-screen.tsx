@@ -1,9 +1,5 @@
 import * as React from 'react';
-
-interface formEntry {
-  email: string,
-  password: string
-}
+import {formEntry} from '../../types';
 
 interface Props {
   handleSubmit: (entry: formEntry) => void

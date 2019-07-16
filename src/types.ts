@@ -8,6 +8,11 @@ export interface Song {
   src: string,
 }
 
+export interface formEntry {
+  email: string,
+  password: string
+}
+
 export interface AnswerArtist {
   artist: string,
   picture: string

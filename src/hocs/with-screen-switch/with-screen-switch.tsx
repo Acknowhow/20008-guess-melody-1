@@ -1,15 +1,14 @@
-import React, {PureComponent} from 'react';
+import * as React from 'react';
 import {connect} from 'react-redux';
-
 import {compose} from 'recompose';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
-import WinScreen from '../../components/win-screen/win-screen.js';
-import WelcomeScreen from '../../components/welcome-screen/welcome-screen.js';
-import GameOverScreen from '../../components/game-over-screen/game-over-screen.js';
-import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.tsx';
-import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.tsx';
-import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.js';
+import WinScreen from '../../components/win-screen/win-screen';
+import WelcomeScreen from '../../components/welcome-screen/welcome-screen';
+import GameOverScreen from '../../components/game-over-screen/game-over-screen';
+import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen';
+import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen';
+import AuthorizationScreen from '../../components/authorization-screen/authorization-screen';
 
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
@@ -22,12 +21,25 @@ import {getStep} from '../../reducers/game/selectors';
 import {getMistakes} from '../../reducers/game/selectors';
 import {getSelectedQuestions} from '../../reducers/data/selectors';
 import {getAuthorizationStatus, getCredentials} from '../../reducers/user/selectors';
+import {AnswerArtist, AnswerGenre, QuestionGenre, QuestionArtist, formEntry} from '../../types';
 
-import PropTypes from 'prop-types';
+type Answer = AnswerArtist|AnswerGenre|boolean[];
+type Question = QuestionGenre|QuestionArtist;
 
-import duckTypes from '../../ts-demo/6-duck-types.ts';
-
-duckTypes();
+interface Props {
+  gameTime: number,
+  isAuthorizationRequired: boolean,
+  mistakes: number,
+  maxMistakes: number,
+  questions: Question[],
+  step: number,
+  credentials: {},
+  onWelcomeScreenClick: () => void,
+  onGenreUserAnswer: (answer: Answer, question: Question) => void,
+  onArtistUserAnswer: (answer: Answer, question: Question) => void,
+  onAuthorizationScreenSubmit: (data: formEntry) => void,
+  resetGame: () => void
+}
 
 const transformPlayerToAnswer = (props) => {
   const newProps = Object.assign({}, props, {
@@ -47,7 +59,7 @@ const GenreQuestionScreenWrapped = withActivePlayer(
 
 
 const withScreenSwitch = (Component) => {
-  class WithScreenSwitch extends PureComponent {
+  class WithScreenSwitch extends React.PureComponent<Props, null> {
     constructor(props) {
       super(props);
 
@@ -125,21 +137,6 @@ const withScreenSwitch = (Component) => {
         </BrowserRouter>);
     }
   }
-
-  WithScreenSwitch.propTypes = {
-    isAuthorizationRequired: PropTypes.bool.isRequired,
-    mistakes: PropTypes.number.isRequired,
-    maxMistakes: PropTypes.number.isRequired,
-    gameTime: PropTypes.number.isRequired,
-    questions: PropTypes.array.isRequired,
-    step: PropTypes.number.isRequired,
-    credentials: PropTypes.object,
-    onWelcomeScreenClick: PropTypes.func.isRequired,
-    onGenreUserAnswer: PropTypes.func.isRequired,
-    onArtistUserAnswer: PropTypes.func.isRequired,
-    onAuthorizationScreenSubmit: PropTypes.func.isRequired,
-    resetGame: PropTypes.func.isRequired
-  };
 
   return WithScreenSwitch;
 };
