@@ -13,19 +13,21 @@ export interface AnswerArtist {
   picture: string
 }
 
-export interface QuestionGenre {
-  answers: {
-    src: string,
-    genre: string
-  }[],
-
-  genre: string,
-  type: Type
-}
-
 export interface QuestionArtist {
   answers: AnswerArtist[],
   song: Song,
 
+  type: Type
+}
+
+export interface AnswerGenre {
+  src: string,
+  genre: string
+}
+
+export interface QuestionGenre {
+  answers: AnswerGenre[],
+
+  genre: string,
   type: Type
 }
