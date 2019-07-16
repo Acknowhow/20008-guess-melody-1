@@ -1,4 +1,4 @@
-import {ActionType} from './../../data';
+import {ActionType} from '../../data';
 
 const initialState = {
   step: -1,

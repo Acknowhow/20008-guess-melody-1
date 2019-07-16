@@ -4,12 +4,12 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
-import WinScreen from '../../components/win-screen/win-screen.jsx';
-import WelcomeScreen from '../../components/welcome-screen/welcome-screen.jsx';
-import GameOverScreen from '../../components/game-over-screen/game-over-screen.jsx';
+import WinScreen from '../../components/win-screen/win-screen.js';
+import WelcomeScreen from '../../components/welcome-screen/welcome-screen.js';
+import GameOverScreen from '../../components/game-over-screen/game-over-screen.js';
 import GenreQuestionScreen from '../../components/genre-question-screen/genre-question-screen.tsx';
 import ArtistQuestionScreen from '../../components/artist-question-screen/artist-question-screen.tsx';
-import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.jsx';
+import AuthorizationScreen from '../../components/authorization-screen/authorization-screen.js';
 
 import withActivePlayer from '../with-active-player/with-active-player';
 import withUserAnswer from '../with-user-answer/with-user-answer';
@@ -25,7 +25,7 @@ import {getAuthorizationStatus, getCredentials} from '../../reducers/user/select
 
 import PropTypes from 'prop-types';
 
-import duckTypes from '../../ts/6-duck-types.ts';
+import duckTypes from '../../ts-demo/6-duck-types.ts';
 
 duckTypes();
 

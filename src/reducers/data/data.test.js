@@ -3,7 +3,7 @@ import {createAPI} from '../../api';
 import {
   Operation,
 } from './data';
-import {ActionType} from './../../data';
+import {ActionType} from '../../data';
 
 
 describe(`Reducer works correctly`, () => {

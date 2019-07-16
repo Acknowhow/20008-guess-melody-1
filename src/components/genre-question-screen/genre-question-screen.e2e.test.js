@@ -3,7 +3,7 @@ import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import GenreQuestionScreen from './genre-question-screen.jsx';
-import withUserAnswer from './../../hocs/with-user-answer/with-user-answer';
+import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
 
 configure({adapter: new Adapter()});
 
