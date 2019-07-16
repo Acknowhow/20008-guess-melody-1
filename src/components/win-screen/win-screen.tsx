@@ -1,8 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-const WinScreen = ({onReplayButtonClick}) => {
+interface Props {
+  onReplayButtonClick: () => void
+}
+
+const WinScreen: React.FunctionComponent<Props> = ({onReplayButtonClick}) => {
 
   return <section className="result">
     <div className="result__logo">
@@ -18,10 +21,6 @@ const WinScreen = ({onReplayButtonClick}) => {
       to="/"
       onClick={onReplayButtonClick}>Сыграть ещё раз</Link>
   </section>;
-};
-
-WinScreen.propTypes = {
-  onReplayButtonClick: PropTypes.func.isRequired
 };
 
 export default WinScreen;

@@ -90,4 +90,3 @@ class AuthorizationScreen extends React.PureComponent<Props, null> {
 }
 
 export default AuthorizationScreen;
-
