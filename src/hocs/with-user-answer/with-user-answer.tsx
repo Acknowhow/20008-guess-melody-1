@@ -1,8 +1,29 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import {Subtract} from 'utility-types';
+
+interface Props {
+  answers: {
+    src: string,
+    genre: string,
+  }[],
+  onAnswer: (answers: boolean[]) => void,
+}
+
+interface State {
+  userAnswer: boolean[],
+}
+
+interface InjectedProps {
+  userAnswer: boolean[],
+  onChange: (i: number) => void,
+  onAnswer: () => void,
+}
 
 const withUserAnswer = (Component) => {
-  class WithUserAnswer extends PureComponent {
+
+  type P = Props & React.ComponentProps<typeof Component>;
+
+  class WithUserAnswer extends React.PureComponent<Subtract<P, InjectedProps>, State> {
     constructor(props) {
       super(props);
 
@@ -38,14 +59,6 @@ const withUserAnswer = (Component) => {
       );
     }
   }
-
-  WithUserAnswer.propTypes = {
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-    })),
-    onAnswer: PropTypes.func.isRequired,
-  };
 
   return WithUserAnswer;
 };
