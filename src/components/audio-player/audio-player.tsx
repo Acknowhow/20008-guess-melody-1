@@ -5,7 +5,7 @@ interface Props {
   isPlaying: boolean,
   renderAudio: () => React.ReactElement,
   onPlayButtonClick: () => void
-  // add src if needed
+  src: string
 }
 
 class AudioPlayer extends React.PureComponent<Props, null> {

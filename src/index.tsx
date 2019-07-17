@@ -6,11 +6,13 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 import {BrowserRouter} from 'react-router-dom';
 
-import App from './components/app/app.tsx';
+import App from './components/app/app';
 import {createAPI} from './api';
 import reducer from './reducers/reducer';
 import {Operation} from './reducers/data/data';
 import withScreenSwitch from './hocs/with-screen-switch/with-screen-switch';
+
+declare const __REDUX_DEVTOOLS_EXTENSION__: () => void;
 
 const settings = {
   gameTime: 5,
@@ -26,8 +28,8 @@ const init = () => {
 
     compose(
       applyMiddleware(thunk.withExtraArgument(api)),
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__()
+      __REDUX_DEVTOOLS_EXTENSION__ &&
+      __REDUX_DEVTOOLS_EXTENSION__()
     ));
 
   store.dispatch(Operation.loadQuestions());
