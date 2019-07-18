@@ -1,11 +1,13 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 
-import GenreQuestionScreen from './genre-question-screen.jsx';
+import {Type} from '../../types';
+
+import GenreQuestionScreen from './genre-question-screen';
 
 const mock = {
   question: {
-    type: `genre`,
+    type: Type.GENRE,
     genre: `rock`,
     answers: [
       {
@@ -36,8 +38,6 @@ it(`GenreQuestionScreen renders correctly`, () => {
     userAnswer={[false, false, true, true]}
     onAnswer={jest.fn()}
     question={question}
-    activePlayer={-1}
-    onPlayButtonClick={jest.fn()}
     renderAnswer={jest.fn()}
   />, {
     createNodeMock: () => {

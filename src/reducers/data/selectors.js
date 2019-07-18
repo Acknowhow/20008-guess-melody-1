@@ -9,21 +9,21 @@ export const getQuestions = (state) => {
 };
 
 export const getSelectedQuestions = createSelector(
-  getQuestions,
-  getStep,
-  (questions, step) => {
+    getQuestions,
+    getStep,
+    (questions, step) => {
 
-    if (questions[step]) {
-      switch (questions[step].type) {
-        case `genre`:
+      if (questions[step]) {
+        switch (questions[step].type) {
+          case `genre`:
 
-          return questions.filter((it) => it.type === `genre`);
+            return questions.filter((it) => it.type === `genre`);
 
-        case `artist`:
+          case `artist`:
 
-          return questions.filter((it) => it.type === `artist`);
+            return questions.filter((it) => it.type === `artist`);
+        }
       }
+      return questions;
     }
-    return questions;
-  }
 );

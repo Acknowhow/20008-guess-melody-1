@@ -1,11 +1,12 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
 
-import ArtistQuestionScreen from './artist-question-screen.jsx';
+import {Type} from '../../types';
+import ArtistQuestionScreen from './artist-question-screen';
 
 const mock = {
   question: {
-    type: `artist`,
+    type: Type.ARTIST,
     song: {
       artist: `Jim Beam`,
       src: `path.mp3`,
