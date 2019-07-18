@@ -1,11 +1,13 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import {App} from '../app/app.tsx';
+import * as React from 'react';
+import * as renderer from 'react-test-renderer';
+import {App} from './app';
+
+import {Type} from '../../types';
 
 const mock = {
   questions: [
     {
-      type: `genre`,
+      type: Type.GENRE,
       genre: `blues`,
       answers: [
         {
@@ -27,7 +29,7 @@ const mock = {
       ],
     },
     {
-      type: `artist`,
+      type: Type.ARTIST,
       song: {
         artist: `Jim Beam`,
         src: `path.mp3`,
@@ -54,14 +56,8 @@ it(`App correctly renders WelcomeScreen`, () => {
   const {questions} = mock;
   const tree = renderer
     .create(<App
-      mistakes={100}
-      maxMistakes={Infinity}
-      gameTime={1000000}
       questions={questions}
       step={-1}
-      onWelcomeScreenClick={jest.fn()}
-      onGenreUserAnswer={jest.fn()}
-      onArtistUserAnswer={jest.fn()}
       renderScreen={jest.fn()}
     />)
     .toJSON();
@@ -73,14 +69,8 @@ it(`App correctly renders genre question screen`, () => {
   const {questions} = mock;
   const tree = renderer
     .create(<App
-      mistakes={100}
-      maxMistakes={Infinity}
-      gameTime={1000000}
       questions={questions}
       step={0}
-      onWelcomeScreenClick={jest.fn()}
-      onGenreUserAnswer={jest.fn()}
-      onArtistUserAnswer={jest.fn()}
       renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
@@ -96,14 +86,8 @@ it(`App correctly renders artist question screen`, () => {
   const {questions} = mock;
   const tree = renderer
     .create(<App
-      mistakes={100}
-      maxMistakes={Infinity}
-      gameTime={1000000}
       questions={questions}
       step={1}
-      onWelcomeScreenClick={jest.fn()}
-      onGenreUserAnswer={jest.fn()}
-      onArtistUserAnswer={jest.fn()}
       renderScreen={jest.fn()}
     />, {
       createNodeMock: () => {
